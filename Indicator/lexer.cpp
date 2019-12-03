@@ -6,7 +6,14 @@
 //  Copyright © 2019 许龙. All rights reserved.
 //
 
-#include "lexer.hpp"
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+#include "common.cpp"
 
 enum dfa_state {
     initial,
@@ -37,6 +44,9 @@ enum dfa_state {
     
     assignment,
     return_assign,
+    
+    function_name,
+    static_key
 };
 
 struct token {
@@ -73,6 +83,9 @@ struct token {
                 
             case assignment: return "Assignment"; break;
             case return_assign: return "ReturnAssign"; break;
+                
+            case function_name: return "Function"; break;
+            case static_key: return "Static"; break;
             default: break;
         }
     }
@@ -97,6 +110,7 @@ private:
     string token_text = "";
     token t;
     vector<token> list;
+    defined_table tb;
     
     bool is_alpha(char ch) {
         return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
@@ -122,9 +136,15 @@ private:
         return is_alpha(ch) || ch == '_' || is_digit(ch) || is_chinese(ch);
     }
     
-    
     dfa_state init_token(char ch) {
         if (token_text.size() > 0) {
+            if (t.st == identifier) {
+                if (tb.is_function(token_text)) {
+                    t.st = function_name;
+                } else if (tb.is_static(token_text)) {
+                    t.st = static_key;
+                }
+            }
             t.txt = token_text;
             list.push_back(t);
             
@@ -176,6 +196,10 @@ private:
     }
     
 public:
+    lexer() {
+        tb = defined_table();
+    }
+    
     vector<token> tokenize(string code) {
         trim(code);
         

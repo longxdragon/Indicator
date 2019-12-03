@@ -33,11 +33,15 @@ int main(int argc, const char * argv[]) {
     ";
     
     string str = "\
-    DRAWTEXT(HH1>LL1 && CLOSE<VAR1 && CCI>=100, HIGH+0.005, '卖');\
-    DRAWTEXT(HH1<LL1 && CLOSE>VAR1 && CCI<=-100, LOW-0.005, '买');\
+    MA55:=MA(C,55);\
     \
-    支撑位 := LLV(LOW,219);\
-    压力位 := HHV(HIGH,219);\
+    DRAWTEXT(CROSS(EMA(C,5),EMA(C,10)),L,'开多'),FONTSIZE20,VALIGN0;\
+    DRAWTEXT(CROSS(EMA(C,10),EMA(C,5)),H,'开空'),FONTSIZE20,VALIGN2,COLORWHITE;\
+    DRAWCOLORLINE(C>MA55,MA55,COLORRED,COLORCYAN),LINETHICK2;\
+    \
+    主趋势线:EMA(EMA(C,10),10),COLORRED,LINETHICK3;\
+    B:=主趋势线>REF(主趋势线,1);\
+    IF(B-1,主趋势线,NULL),COLORGREEN,LINETHICK3;\
     ";
     lexer lxr = lexer();
     lxr.dump(lxr.tokenize(str));
