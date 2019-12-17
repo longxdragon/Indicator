@@ -1,0 +1,60 @@
+//
+//  token.hpp
+//  Indicator
+//
+//  Created by 许龙 on 2019/12/17.
+//  Copyright © 2019 许龙. All rights reserved.
+//
+
+#ifndef token_hpp
+#define token_hpp
+
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+
+enum dfa_state {
+    initial,
+    identifier,
+    digit,
+    string_literal,
+    string_sub,
+    
+    gt,             // >
+    ge,             // >=
+    lt,             // <
+    le,             // <=
+    colon,          // :
+    comma,          // ,
+    semicolon,      // ;
+    left_paren,     // (
+    right_paren,    // )
+    single_quotes,  // '
+    single_and,     // &
+    single_or,      // |
+    double_and,     // &&
+    double_or,      // ||
+    
+    add,            // +
+    reduce,         // -
+    multi,          // *
+    divide,         // /
+    
+    assignment,
+    return_assign,
+    
+    function_name,
+    static_key
+};
+
+struct token {
+    
+public:
+    dfa_state st = initial;
+    string txt;
+    string format_st();
+    bool empty();
+};
+
+#endif /* token_hpp */

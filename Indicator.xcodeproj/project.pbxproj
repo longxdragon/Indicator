@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		62033408237ABBE2009CFFEB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62033407237ABBE2009CFFEB /* main.cpp */; };
-		6269EDD323960D8900F1ECAC /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6269EDD223960D8900F1ECAC /* common.cpp */; };
-		628109212390AEF200AA9ED9 /* lexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6281091F2390AEF200AA9ED9 /* lexer.cpp */; };
+		62316BF623A8BE1B0058853C /* lexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62316BF423A8BE1B0058853C /* lexer.cpp */; };
+		62316BF923A8BFD60058853C /* token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62316BF723A8BFD60058853C /* token.cpp */; };
+		62316BFC23A8C0F30058853C /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62316BFA23A8C0F30058853C /* common.cpp */; };
+		62316BFF23A8C49D0058853C /* token_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62316BFD23A8C49D0058853C /* token_reader.cpp */; };
+		62316C0223A8C6FC0058853C /* ast_node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62316C0023A8C6FC0058853C /* ast_node.cpp */; };
+		62316C0523A8C8210058853C /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62316C0323A8C8210058853C /* parser.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +31,18 @@
 /* Begin PBXFileReference section */
 		62033404237ABBE2009CFFEB /* Indicator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Indicator; sourceTree = BUILT_PRODUCTS_DIR; };
 		62033407237ABBE2009CFFEB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		6269EDD223960D8900F1ECAC /* common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
-		6281091F2390AEF200AA9ED9 /* lexer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lexer.cpp; sourceTree = "<group>"; };
+		62316BF423A8BE1B0058853C /* lexer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lexer.cpp; sourceTree = "<group>"; };
+		62316BF523A8BE1B0058853C /* lexer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lexer.hpp; sourceTree = "<group>"; };
+		62316BF723A8BFD60058853C /* token.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = token.cpp; sourceTree = "<group>"; };
+		62316BF823A8BFD60058853C /* token.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = token.hpp; sourceTree = "<group>"; };
+		62316BFA23A8C0F30058853C /* common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
+		62316BFB23A8C0F30058853C /* common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
+		62316BFD23A8C49D0058853C /* token_reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = token_reader.cpp; sourceTree = "<group>"; };
+		62316BFE23A8C49D0058853C /* token_reader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = token_reader.hpp; sourceTree = "<group>"; };
+		62316C0023A8C6FC0058853C /* ast_node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ast_node.cpp; sourceTree = "<group>"; };
+		62316C0123A8C6FC0058853C /* ast_node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ast_node.hpp; sourceTree = "<group>"; };
+		62316C0323A8C8210058853C /* parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = parser.cpp; sourceTree = "<group>"; };
+		62316C0423A8C8210058853C /* parser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = parser.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +76,18 @@
 			isa = PBXGroup;
 			children = (
 				62033407237ABBE2009CFFEB /* main.cpp */,
-				6281091F2390AEF200AA9ED9 /* lexer.cpp */,
-				6269EDD223960D8900F1ECAC /* common.cpp */,
+				62316BF523A8BE1B0058853C /* lexer.hpp */,
+				62316BF423A8BE1B0058853C /* lexer.cpp */,
+				62316BF823A8BFD60058853C /* token.hpp */,
+				62316BF723A8BFD60058853C /* token.cpp */,
+				62316BFB23A8C0F30058853C /* common.hpp */,
+				62316BFA23A8C0F30058853C /* common.cpp */,
+				62316BFE23A8C49D0058853C /* token_reader.hpp */,
+				62316BFD23A8C49D0058853C /* token_reader.cpp */,
+				62316C0123A8C6FC0058853C /* ast_node.hpp */,
+				62316C0023A8C6FC0058853C /* ast_node.cpp */,
+				62316C0423A8C8210058853C /* parser.hpp */,
+				62316C0323A8C8210058853C /* parser.cpp */,
 			);
 			path = Indicator;
 			sourceTree = "<group>";
@@ -125,9 +149,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62316C0523A8C8210058853C /* parser.cpp in Sources */,
+				62316C0223A8C6FC0058853C /* ast_node.cpp in Sources */,
+				62316BFC23A8C0F30058853C /* common.cpp in Sources */,
 				62033408237ABBE2009CFFEB /* main.cpp in Sources */,
-				6269EDD323960D8900F1ECAC /* common.cpp in Sources */,
-				628109212390AEF200AA9ED9 /* lexer.cpp in Sources */,
+				62316BF623A8BE1B0058853C /* lexer.cpp in Sources */,
+				62316BF923A8BFD60058853C /* token.cpp in Sources */,
+				62316BFF23A8C49D0058853C /* token_reader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

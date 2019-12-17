@@ -8,7 +8,8 @@
 
 #include <iostream>
 
-#include "lexer.cpp"
+#include "lexer.hpp"
+#include "parser.hpp"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -43,8 +44,13 @@ int main(int argc, const char * argv[]) {
     B:=主趋势线>REF(主趋势线,1);\
     IF(B-1,主趋势线,NULL),COLORGREEN,LINETHICK3;\
     ";
+    
     lexer lxr = lexer();
-    lxr.dump(lxr.tokenize(str));
+    token_reader reader = lxr.tokenize(str);
+    reader.dump();
+    
+    parser pser = parser();
+    pser.analyze(reader);
     
     return 0;
 }
