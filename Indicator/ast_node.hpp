@@ -15,6 +15,14 @@
 
 enum class ast_node_type {
     declaration,
+    identifier,
+    assignment,
+    or_express,
+    and_express,
+    equal_express,
+    rel_express,
+    add_express,
+    mul_express,
 };
 
 class ast_node {

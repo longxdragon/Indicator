@@ -96,6 +96,8 @@ dfa_state lexer::init_token(char ch) {
         st = multi;
     } else if (ch == '/') {
         st = divide;
+    } else if (ch == '!') {
+        st = exclamatory_mark;
     }
     if (st != initial) {
         token_text += to_string(ch);
@@ -148,10 +150,18 @@ token_reader lexer::tokenize(string code) {
             case add:
             case multi:
             case divide:
-            case return_assign:
             case assignment: {
                 st = init_token(ch);
             } break;
+            case exclamatory_mark: {
+                if (ch == '=') {
+                    token_text += to_string(ch);
+                    st = no_equal;
+                    t.st = st;
+                } else {
+                    st = init_token(ch);
+                }
+            }
             case reduce: {
                 if (is_digit(ch)) {
                     token_text += to_string(ch);
@@ -164,7 +174,7 @@ token_reader lexer::tokenize(string code) {
             case colon: {
                 if (ch == '=') {
                     token_text += to_string(ch);
-                    st = return_assign;
+                    st = assignment;
                     t.st = st;
                 } else {
                     st = init_token(ch);

@@ -35,14 +35,16 @@ enum dfa_state {
     single_or,      // |
     double_and,     // &&
     double_or,      // ||
+    single_equal,   // =
+    exclamatory_mark,   // !
+    no_equal,           // !=
     
     add,            // +
     reduce,         // -
     multi,          // *
     divide,         // /
     
-    assignment,
-    return_assign,
+    assignment,     // :=
     
     function_name,
     static_key

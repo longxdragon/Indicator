@@ -30,6 +30,9 @@ string token::format_st() {
         case single_or: return "SingleOr"; break;
         case double_and: return "DoubleAnd"; break;
         case double_or: return "DoubleOr"; break;
+        case single_equal: return "SingleEqual"; break;
+        case exclamatory_mark: return "ExclamatoryMark"; break;
+        case no_equal: return "NoEqual"; break;
             
         case add: return "Add"; break;
         case reduce: return "Reduce"; break;
@@ -37,7 +40,6 @@ string token::format_st() {
         case divide: return "Divide"; break;
             
         case assignment: return "Assignment"; break;
-        case return_assign: return "ReturnAssign"; break;
             
         case function_name: return "Function"; break;
         case static_key: return "Static"; break;
