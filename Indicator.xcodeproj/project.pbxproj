@@ -76,16 +76,16 @@
 			isa = PBXGroup;
 			children = (
 				62033407237ABBE2009CFFEB /* main.cpp */,
-				62316BF523A8BE1B0058853C /* lexer.hpp */,
-				62316BF423A8BE1B0058853C /* lexer.cpp */,
-				62316BF823A8BFD60058853C /* token.hpp */,
-				62316BF723A8BFD60058853C /* token.cpp */,
 				62316BFB23A8C0F30058853C /* common.hpp */,
 				62316BFA23A8C0F30058853C /* common.cpp */,
+				62316BF823A8BFD60058853C /* token.hpp */,
+				62316BF723A8BFD60058853C /* token.cpp */,
 				62316BFE23A8C49D0058853C /* token_reader.hpp */,
 				62316BFD23A8C49D0058853C /* token_reader.cpp */,
 				62316C0123A8C6FC0058853C /* ast_node.hpp */,
 				62316C0023A8C6FC0058853C /* ast_node.cpp */,
+				62316BF523A8BE1B0058853C /* lexer.hpp */,
+				62316BF423A8BE1B0058853C /* lexer.cpp */,
 				62316C0423A8C8210058853C /* parser.hpp */,
 				62316C0323A8C8210058853C /* parser.cpp */,
 			);

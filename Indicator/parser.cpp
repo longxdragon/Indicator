@@ -8,13 +8,60 @@
 
 #include "parser.hpp"
 
+ast_node::ptr express(token_reader& reader);
+
 ast_node::ptr pri_express(token_reader& reader) {
     ast_node::ptr node = nullptr;
     token t = reader.peek();
     if (!reader.empty()) {
         if (t.st == dfa_state::identifier) {
+            reader.read();
             node = ast_node::create(ast_node_type::identifier, t.txt);
+        } else if (t.st == dfa_state::digit) {
+            reader.read();
+            node = ast_node::create(ast_node_type::digit_literal, t.txt);
+        } else if (t.st == dfa_state::string_literal) {
+            reader.read();
+            node = ast_node::create(ast_node_type::string_literal, t.txt);
+        } else if (t.st == dfa_state::static_key) {
+            reader.read();
+            node = ast_node::create(ast_node_type::static_literal, t.txt);
+        } else if (t.st == dfa_state::left_paren) {
+            reader.read();
+            node = express(reader);
+            t = reader.read(); // right_paren
+            if (t.empty() || t.st != dfa_state::right_paren) {
+                cout << "An valid expression is required!" << endl;
+            }
+        } else if (t.st == dfa_state::function_name) {
+            reader.read();  // consume 'function_name'
+            node = ast_node::create(ast_node_type::fun_express, t.txt);
+            t = reader.peek();
+            if (t.st == dfa_state::left_paren) {
+                reader.read();  // consume '('
+                while (true) {
+                    ast_node::ptr child = express(reader);
+                    if (child != nullptr) {
+                        node->add_child(child);
+                        t = reader.peek();
+                        if (t.st == dfa_state::comma) {
+                            reader.read();  // consum ','
+                        } else if (t.st == dfa_state::right_paren) {
+                            reader.read();  // consum ')'
+                            break;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        } else {
+            cout << "An valid expression is required!" << endl;
         }
+    } else {
+        cout << "An valid expression is required!" << endl;
     }
     return node;
 }
@@ -156,7 +203,7 @@ ast_node::ptr express(token_reader& reader) {
     ast_node::ptr node = child_1;
     token t = reader.peek();
     if (node != nullptr && !t.empty()) {
-        if (t.st == dfa_state::assignment) {
+        if (t.st == dfa_state::assignment || t.st == dfa_state::colon) {
             reader.read();
             ast_node::ptr child_2 = express(reader);
             node = ast_node::create(ast_node_type::assignment, t.txt);
@@ -172,19 +219,13 @@ ast_node::ptr express(token_reader& reader) {
 }
 
 ast_node::ptr parser::analyze(token_reader& reader) {
-    ast_node::ptr node = nullptr;
+    ast_node::ptr node = ast_node::create(ast_node_type::root, "root");
     token t = reader.peek();
-    if (!t.empty()) {
-        if (t.st == static_key) {
-            t = reader.read();
-            node = ast_node::create(ast_node_type::declaration, t.txt);
-            while (!reader.end()) {
-                ast_node::ptr child;
-                node->add_child(child);
-            }
-        } else {
-            node = express(reader);
-        }
+    while (!t.empty()) {
+        ast_node::ptr child = express(reader);
+        node->add_child(child);
+        reader.read();  // consume ';'
+        t = reader.peek();
     }
     return node;
 }

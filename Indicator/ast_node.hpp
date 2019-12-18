@@ -12,10 +12,16 @@
 #include <stdio.h>
 #include <string>
 #include <list>
+#include <iostream>
 
 enum class ast_node_type {
-    declaration,
+    root,
+    
     identifier,
+    digit_literal,
+    string_literal,
+    static_literal,
+    
     assignment,
     or_express,
     and_express,
@@ -23,6 +29,7 @@ enum class ast_node_type {
     rel_express,
     add_express,
     mul_express,
+    fun_express,
 };
 
 class ast_node {
@@ -33,11 +40,13 @@ public:
     ast_node(const ast_node_type &type, const std::string& text);
     static ptr create(const ast_node_type &type, const std::string& text);
     void add_child(ptr node);
+    void dump();
 
 private:
     ast_node_type m_type;
     std::string m_text;
     std::list<ptr> m_child;
+    void print(int level);
 };
 
 #endif /* ast_node_hpp */

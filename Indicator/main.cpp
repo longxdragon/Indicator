@@ -36,33 +36,24 @@ int main(int argc, const char * argv[]) {
     string str = "\
     MA55:=MA(C,55);\
     \
-    DRAWTEXT(CROSS(EMA(C,5),EMA(C,10)),L,'开多'),FONTSIZE20,VALIGN0;\
-    DRAWTEXT(CROSS(EMA(C,10),EMA(C,5)),H,'开空'),FONTSIZE20,VALIGN2,COLORWHITE;\
-    DRAWCOLORLINE(C>MA55,MA55,COLORRED,COLORCYAN),LINETHICK2;\
+    DRAWTEXT(CROSS(EMA(C,5),EMA(C,10)),L,'开多');\
+    DRAWTEXT(CROSS(EMA(C,10),EMA(C,5)),H,'开空');\
+    DRAWCOLORLINE(C>MA55,MA55,COLORRED,COLORCYAN);\
     \
-    主趋势线:EMA(EMA(C,10),10),COLORRED,LINETHICK3;\
+    主趋势线:EMA(EMA(C,10),10);\
     B:=主趋势线>REF(主趋势线,1);\
-    IF(B-1,主趋势线,NULL),COLORGREEN,LINETHICK3;\
+    IF(B-1,主趋势线,NULL);\
     ";
     
     lexer lxr = lexer();
-    token_reader reader = lxr.tokenize(str);
-    reader.dump();
+    token_reader reader = lxr.tokenize(str1);
+//    reader.dump();
     
     parser pser = parser();
-    pser.analyze(reader);
+    ast_node::ptr node = pser.analyze(reader);
+    node->dump();
     
     return 0;
 }
-
-
-/**
- 1、需求不明确，通用组件的概念太多，没明确到非常细的颗粒度。
- 2、我这边的需求消化也没完全到位，特别是通用图表概念，估时高端了。
- 3、需求变更太频繁。
- 4、UI出图，不要只出示例，各种情况的组件，建议都出一份。
- 
- 技术不配合开发？UI的改动还是需要点技术理论知识，因为确实有些不好改。
- */
 
 

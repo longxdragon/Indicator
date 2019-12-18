@@ -163,7 +163,8 @@ token_reader lexer::tokenize(string code) {
                 }
             }
             case reduce: {
-                if (is_digit(ch)) {
+                token last_token = list.back();
+                if (is_digit(ch) && (last_token.st != identifier && last_token.st != digit)) {
                     token_text += to_string(ch);
                     st = digit;
                     t.st = st;

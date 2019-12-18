@@ -17,8 +17,9 @@ int length(T& arr) {
 defined_table::defined_table() {
     std::string ft[] = {
         "C", "L", "H", "O",
-        "MA", "EMA", "REF", "HHV", "LLV",
-        "CROSS", "IF",
+        "CLOSE", "LOW", "HIGH", "OPEN",
+        "MA", "EMA", "REF", "HHV", "LLV", "AVEDEV",
+        "CROSS", "IF", "BARSLAST",
         "DRAWTEXT", "DRAWCOLORLINE"
     };
     std::string st[] = {
