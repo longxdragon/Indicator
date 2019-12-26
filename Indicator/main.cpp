@@ -7,13 +7,58 @@
 //
 
 #include <iostream>
+#include <vector>
+#include <string>
+#include <map>
 
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "parse_walker.hpp"
+#include "evaluator.hpp"
+
+using namespace std;
 
 int main(int argc, const char * argv[]) {
     // insert code here...
+    
+    map<string, string> item_1;
+    item_1.insert({"c", "2012"});
+    item_1.insert({"o", "2022"});
+    item_1.insert({"h", "2025"});
+    item_1.insert({"l", "2001"});
+    
+    map<string, string> item_2;
+    item_2.insert({"c", "2012"});
+    item_2.insert({"o", "2022"});
+    item_2.insert({"h", "2025"});
+    item_2.insert({"l", "2001"});
+    
+    map<string, string> item_3;
+    item_3.insert({"c", "2012"});
+    item_3.insert({"o", "2022"});
+    item_3.insert({"h", "2025"});
+    item_3.insert({"l", "2001"});
+    
+    map<string, string> item_4;
+    item_4.insert({"c", "2012"});
+    item_4.insert({"o", "2022"});
+    item_4.insert({"h", "2025"});
+    item_4.insert({"l", "2001"});
+    
+    map<string, string> item_5;
+    item_5.insert({"c", "2012"});
+    item_5.insert({"o", "2022"});
+    item_5.insert({"h", "2025"});
+    item_5.insert({"l", "2001"});
+    
+    vector<map<string, string>> data;
+    data.push_back(item_1);
+    data.push_back(item_2);
+    data.push_back(item_3);
+    data.push_back(item_4);
+    data.push_back(item_5);
+    
+    
     
     string str1 = "\
     HH := HHV(HIGH, 219);\
@@ -56,18 +101,21 @@ int main(int argc, const char * argv[]) {
     ";
     
     string ma = "\
-    MA5 := MA(C, 5, 5);\
+    MA2 := MA(C, 2);\
     MA10 := MA(C, 10);\
     ";
     
+    // 词法分析
     lexer lxr = lexer();
     token_reader reader = lxr.tokenize(ma);
     reader.dump();
     
+    // 语法分析
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
     node->dump();
     
+    // 语义分析
     std::cout << std::endl;
     parse_walker wkr = parse_walker();
     bool is = wkr.walker(node);
@@ -76,8 +124,9 @@ int main(int argc, const char * argv[]) {
     }
     std::cout << std::endl;
     
-    
-    // ASTEvaluator 解释器，运行 AST 树的结果
+    // 解释运行
+    evaluator elr = evaluator(data);
+    std::map< std::string, std::vector<double> > val = elr.evaluate(node);
     
     return 0;
 }

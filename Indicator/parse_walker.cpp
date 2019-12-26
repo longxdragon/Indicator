@@ -8,7 +8,7 @@
 
 #include "parse_walker.hpp"
 
-bool parse_walker::lookup_function(ast_node::ptr root) {    
+bool parse_walker::lookup_function(ast_node::ptr root) {
     for (ast_node::ptr child : root->get_child()) {
         ast_node_type ty = child->get_type();
         if (ty == ast_node_type::fun_express) {
@@ -46,9 +46,8 @@ bool parse_walker::lookup_statement(ast_node::ptr root) {
             return false;
         } else if (ty == ast_node_type::assignment) {
             ast_node::ptr node = child->get_child(0);
-            if (node != nullptr) {
-                // store all variable
-                var_map.insert({node->get_text(), true});
+            if (node != nullptr && node->get_type() == ast_node_type::identifier && child->get_child().size() == 2) {
+                var_map.insert({node->get_text(), true});  // store all variable
                 continue;
             }
             return false;
