@@ -10,6 +10,7 @@
 
 #include "lexer.hpp"
 #include "parser.hpp"
+#include "parse_walker.hpp"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -47,18 +48,33 @@ int main(int argc, const char * argv[]) {
     IF(B-1,主趋势线,NULL);\
     ";
     
+    
+    string cci = "\
+    M := 14;\
+    TYP := (HIGH + LOW + CLOSE)/3;\
+    CCI := (TYP-MA(TYP,M))/(0.015*AVEDEV(TYP,M));\
+    ";
+    
+    string ma = "\
+    MA5 := MA(C, 5, 5);\
+    MA10 := MA(C, 10);\
+    ";
+    
     lexer lxr = lexer();
-    token_reader reader = lxr.tokenize(str1);
-//    reader.dump();
+    token_reader reader = lxr.tokenize(ma);
+    reader.dump();
     
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
     node->dump();
     
-    
-    // AnnotatedTree 注释树，完成对 AST 树的语义分析，包括
-    // 1. 类型判断
-    // 2. 函数参数判断
+    std::cout << std::endl;
+    parse_walker wkr = parse_walker();
+    bool is = wkr.walker(node);
+    if (is) {
+        std::cout << "Parse walker lookup success!" << std::endl;
+    }
+    std::cout << std::endl;
     
     
     // ASTEvaluator 解释器，运行 AST 树的结果

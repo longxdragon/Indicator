@@ -42,6 +42,11 @@ public:
     void add_child(ptr node);
     void dump();
 
+    ast_node_type get_type();
+    std::string get_text();
+    std::list<ptr> get_child();
+    ast_node::ptr get_child(int idx);
+    
 private:
     ast_node_type m_type;
     std::string m_text;

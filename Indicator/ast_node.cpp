@@ -23,6 +23,28 @@ void ast_node::add_child(ptr node) {
     }
 }
 
+ast_node_type ast_node::get_type() {
+    return m_type;
+};
+
+std::string ast_node::get_text() {
+    return m_text;
+};
+
+std::list<ast_node::ptr> ast_node::get_child() {
+    return m_child;
+};
+
+ast_node::ptr ast_node::get_child(int idx) {
+    int i = 0;
+    for (std::list<ast_node::ptr>::iterator iter = m_child.begin(); iter != m_child.end(); iter++, i++) {
+        if (i == idx) {
+            return *iter;
+        }
+    }
+    return nullptr;
+}
+
 std::string format_st(ast_node_type type) {
     switch (type) {
         case ast_node_type::root: return "Root"; break;

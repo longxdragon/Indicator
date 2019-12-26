@@ -16,13 +16,14 @@
 class defined_table {
     
 private:
-    std::map<std::string, bool> function_table;
+    std::map<std::string, int> function_table;
     std::map<std::string, bool> static_table;
     
 public:
     defined_table();
     bool is_function(std::string str);
     bool is_static(std::string str);
+    int param_cnt_in_function(std::string str);
 };
 
 #endif /* common_hpp */

@@ -17,15 +17,21 @@ int length(T& arr) {
 defined_table::defined_table() {
     std::string ft[] = {
         "C", "L", "H", "O", "CLOSE", "LOW", "HIGH", "OPEN", "ISLASTBAR",
-        "MA", "EMA", "SMA", "REF", "HHV", "LLV", "AVEDEV",
-        "CROSS", "IF", "BARSLAST", "BACKSET",
+        "MA", "EMA", "SMA", "REF", "REFX", "HHV", "LLV", "AVEDEV",
+        "CROSS", "IF",
         "DRAWTEXT", "DRAWCOLORLINE"
+    };
+    int pr[] = {
+        0, 0, 0, 0, 0, 0, 0, 0, 0,
+        2, 2, 3, 2, 2, 2, 2, 2,
+        2, 3,
+        3, 4
     };
     std::string st[] = {
         "NULL"
     };
-    for (int i = 0; i < length(ft); i++) {
-        function_table.insert({ft[i], true});
+    for (int i = 0; i < length(ft) && i < length(pr); i++) {
+        function_table.insert({ft[i], pr[i]});
     }
     for (int i = 0; i < length(st); i++) {
         static_table.insert({st[i], true});
@@ -44,4 +50,12 @@ bool defined_table::is_static(std::string str) {
         return false;
     }
     return true;
+}
+
+int defined_table::param_cnt_in_function(std::string str) {
+    auto iter = function_table.find(str);
+    if (iter == function_table.end()) {
+        return 0;
+    }
+    return iter->second;
 }

@@ -17,7 +17,6 @@
 
 class parser {
     
-    
 public:
     ast_node::ptr analyze(token_reader& reader);
 };
