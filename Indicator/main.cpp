@@ -27,6 +27,8 @@ int main(int argc, const char * argv[]) {
     MA05 := MA(CLOSE,45);\
     MA10 := MA(CLOSE,13);\
     VAR1 := MA(CLOSE,55);\
+    FG02:=FG01=FD01 AND G1>D1 OR G1<=D1;\
+    FD02:=FG01=FD01 AND G1<D1;\
     \
     M := 14;\
     TYP := (HIGH + LOW + CLOSE)/3;\
@@ -52,6 +54,14 @@ int main(int argc, const char * argv[]) {
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
     node->dump();
+    
+    
+    // AnnotatedTree 注释树，完成对 AST 树的语义分析，包括
+    // 1. 类型判断
+    // 2. 函数参数判断
+    
+    
+    // ASTEvaluator 解释器，运行 AST 树的结果
     
     return 0;
 }

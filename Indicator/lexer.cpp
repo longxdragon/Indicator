@@ -13,11 +13,9 @@ string to_string(char ch) {
 }
 
 void trim(string &str) {
-    size_t idx = 0;
     if (!str.empty()) {
-        while ((idx = str.find(" ")) != string::npos) {
-            str.erase(idx, 1);
-        }
+        str.erase(0, str.find_first_not_of(" "));
+        str.erase(str.find_last_not_of(" ") + 1);
     }
 }
 
@@ -62,7 +60,11 @@ dfa_state lexer::init_token(char ch) {
     }
     
     dfa_state st = initial;
-    if (is_variable_start(ch)) {
+    if (ch == 'A') {
+        st = and_a;
+    } else if (ch == 'O') {
+        st = or_o;
+    } else if (is_variable_start(ch)) {
         st = identifier;
     } else if (is_digit(ch)) {
         st = digit;
@@ -77,7 +79,7 @@ dfa_state lexer::init_token(char ch) {
     } else if (ch == ';') {
         st = semicolon;
     } else if (ch == '=') {
-        st = assignment;
+        st = single_equal;
     } else if (ch == '\'') {
         st = single_quotes;
     } else if (ch == '(') {
@@ -150,6 +152,7 @@ token_reader lexer::tokenize(string code) {
             case add:
             case multi:
             case divide:
+            case single_equal:
             case assignment: {
                 st = init_token(ch);
             } break;
@@ -231,6 +234,68 @@ token_reader lexer::tokenize(string code) {
                     st = init_token(ch);
                 }
             } break;
+            case and_a: {
+                if (ch == 'N') {
+                    token_text += to_string(ch);
+                    st = and_an;
+                    t.st = st;
+                } else if (is_variable(ch)) {
+                    token_text += to_string(ch);
+                    st = identifier;
+                    t.st = st;
+                } else {
+                    t.st = identifier;
+                    st = init_token(ch);
+                }
+            } break;
+            case and_an: {
+                if (ch == 'D') {
+                    token_text += to_string(ch);
+                    st = and_and;
+                    t.st = st;
+                } else if (is_variable(ch)) {
+                    token_text += to_string(ch);
+                    st = identifier;
+                    t.st = st;
+                } else {
+                    t.st = identifier;
+                    st = init_token(ch);
+                }
+            } break;
+            case and_and: {
+                if (is_variable(ch)) {
+                    token_text += to_string(ch);
+                    st = identifier;
+                    t.st = st;
+                } else {
+                    t.st = double_and;
+                    st = init_token(ch); // this is double_and
+                }
+            } break;
+            case or_o: {
+                if (ch == 'R') {
+                    token_text += to_string(ch);
+                    st = or_or;
+                    t.st = st;
+                } else if (is_variable(ch)) {
+                    token_text += to_string(ch);
+                    st = identifier;
+                    t.st = st;
+                } else {
+                    t.st = identifier;
+                    st = init_token(ch);
+                }
+            } break;
+            case or_or: {
+                if (is_variable(ch)) {
+                    token_text += to_string(ch);
+                    st = identifier;
+                    t.st = st;
+                } else {
+                    t.st = double_or;
+                    st = init_token(ch); // this is double_or
+                }
+            }
             default:
                 break;
         }

@@ -43,7 +43,7 @@ string token::format_st() {
             
         case function_name: return "Function"; break;
         case static_key: return "Static"; break;
-        default: break;
+        default: return "Disable..."; break;
     };
 }
 

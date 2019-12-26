@@ -33,8 +33,8 @@ enum dfa_state {
     single_quotes,  // '
     single_and,     // &
     single_or,      // |
-    double_and,     // &&
-    double_or,      // ||
+    double_and,     // && AND
+    double_or,      // || OR
     single_equal,   // =
     exclamatory_mark,   // !
     no_equal,           // !=
@@ -43,6 +43,12 @@ enum dfa_state {
     reduce,         // -
     multi,          // *
     divide,         // /
+    
+    and_a,          // AND_A
+    or_o,           // OR_O
+    or_or,          // OR_OR
+    and_an,         // AND_AN
+    and_and,        // AND_AND
     
     assignment,     // :=
     
