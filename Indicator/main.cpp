@@ -11,10 +11,7 @@
 #include <string>
 #include <map>
 
-#include "lexer.hpp"
-#include "parser.hpp"
-#include "parse_walker.hpp"
-#include "evaluator.hpp"
+#include "compiler.hpp"
 
 using namespace std;
 
@@ -105,28 +102,8 @@ int main(int argc, const char * argv[]) {
     MA10 := MA(C, 10);\
     ";
     
-    // 词法分析
-    lexer lxr = lexer();
-    token_reader reader = lxr.tokenize(ma);
-    reader.dump();
-    
-    // 语法分析
-    parser pser = parser();
-    ast_node::ptr node = pser.analyze(reader);
-    node->dump();
-    
-    // 语义分析
-    std::cout << std::endl;
-    parse_walker wkr = parse_walker();
-    bool is = wkr.walker(node);
-    if (is) {
-        std::cout << "Parse walker lookup success!" << std::endl;
-    }
-    std::cout << std::endl;
-    
-    // 解释运行
-    evaluator elr = evaluator(data);
-    std::map< std::string, std::vector<double> > val = elr.evaluate(node);
+    compiler clr = compiler(data);
+    std::map< std::string, std::vector<double> > val = clr.compile(ma);
     
     return 0;
 }
