@@ -113,6 +113,7 @@ lexer::lexer() {
 }
 
 token_reader lexer::tokenize(string code) {
+    code = regex_replace(code, regex("//[0-9A-Za-z\u4e00-\u9fa5]+"), "");
     trim(code);
     
     list.clear();
@@ -153,6 +154,7 @@ token_reader lexer::tokenize(string code) {
             case multi:
             case divide:
             case single_equal:
+            case no_equal:
             case assignment: {
                 st = init_token(ch);
             } break;
@@ -164,7 +166,7 @@ token_reader lexer::tokenize(string code) {
                 } else {
                     st = init_token(ch);
                 }
-            }
+            } break;
             case reduce: {
                 token last_token = list.back();
                 if (is_digit(ch) && (last_token.st != identifier && last_token.st != digit)) {
@@ -197,6 +199,10 @@ token_reader lexer::tokenize(string code) {
                 if (ch == '=') {
                     token_text += to_string(ch);
                     st = le;
+                    t.st = st;
+                } else if (ch == '>') {
+                    token_text += to_string(ch);
+                    st = no_equal;
                     t.st = st;
                 } else {
                     st = init_token(ch);

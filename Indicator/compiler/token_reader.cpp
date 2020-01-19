@@ -53,4 +53,5 @@ void token_reader::dump() {
     for (vector<token>::iterator iter = token_list.begin(); iter != token_list.end(); iter++) {
         std::cout << iter->format_st() << " : " << iter->txt << std::endl;
     }
+    std::cout << "" << std::endl;
 }

@@ -11,37 +11,195 @@
 
 std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr root) {
     std::vector<double> rt;
-    
-    if (name.compare("C") == 0) {
+    if (name.compare("C") == 0 || name.compare("CLOSE") == 0) {
         rt = lib_math::c(data);
-    } else if (name.compare("O") == 0) {
+    } else if (name.compare("O") == 0 || name.compare("OPEN") == 0) {
         rt = lib_math::o(data);
-    } else if (name.compare("H") == 0) {
+    } else if (name.compare("H") == 0 || name.compare("HIGH") == 0) {
         rt = lib_math::h(data);
-    } else if (name.compare("L") == 0) {
+    } else if (name.compare("L") == 0 || name.compare("LOW") == 0) {
         rt = lib_math::l(data);
-    } else if (name.compare("MA") == 0) {
-        ast_node::ptr c1 = root->get_child(0);
-        ast_node::ptr c2 = root->get_child(1);
-        std::vector<double> v1 = _evaluate(c1);
-        std::vector<double> v2 = _evaluate(c2);
+    } else if (name.compare("ISLASTBAR") == 0) {
+        rt = lib_math::is_lastbar(data);
+    }  else if (name.compare("MA") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));  // just digit literal
         if (v2.size()) {
             rt = lib_math::ma(v1, (size_t)v2[0]);
         }
+    } else if (name.compare("EMA") == 0) {
+        std::cout << "Not implement func name : " << name << std::endl;
+        
+    } else if (name.compare("SMA") == 0) {
+        std::cout << "Not implement func name : " << name << std::endl;
+        
+    } else if (name.compare("REF") == 0 || name.compare("REFX") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        if (v2.size() == 1) {
+            rt = lib_math::ref(v1, (size_t)v2[0]);
+        } else {
+            rt = lib_math::ref(v1, v2);
+        }
+    } else if (name.compare("HHV") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        if (v2.size() == 1) {
+            rt = lib_math::hhv(v1, (size_t)v2[0]);
+        } else {
+            rt = lib_math::hhv(v1, v2);
+        }
+    } else if (name.compare("LLV") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        if (v2.size() == 1) {
+            rt = lib_math::llv(v1, (size_t)v2[0]);
+        } else {
+            rt = lib_math::llv(v1, v2);
+        }
+    } else if (name.compare("AVEDEV") == 0) {
+        std::cout << "Not implement func name : " << name << std::endl;
+        
+    } else if (name.compare("CROSS") == 0) {
+        std::cout << "Not implement func name : " << name << std::endl;
+        
+    } else if (name.compare("IF") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        std::vector<double> v3 = _evaluate(root->get_child(2));
+        rt = lib_math::eif(v1, v2, v3);
+        
+    } else if (name.compare("BARSLAST") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        rt = lib_math::barslast(v1);
+        
+    } else if (name.compare("BACKSET") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        if (v2.size() == 1) {
+            rt = lib_math::backset(v1, (size_t)v2[0]);
+        } else {
+            rt = lib_math::backset(v1, v2);
+        }
+    } else if (name.compare("VALUEWHEN") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        rt = lib_math::backset(v1, v2);
+    } else if (name.compare("IF") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        std::vector<double> v3 = _evaluate(root->get_child(2));
+        rt = lib_math::eif(v1, v2, v3);
+    } else {
+        std::cout << "Not implement func name : " << name << std::endl;
+    }
+    return rt;
+}
+
+// + -
+std::vector<double> evaluator::_add_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    std::vector<double> v1 = _evaluate(root->get_child(0));
+    std::vector<double> v2 = _evaluate(root->get_child(1));
+    string op = root->get_text();
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+         if (op.compare("+") == 0) rt.push_back(v1[i] + v2[i]);
+         else rt.push_back(v1[i] - v2[i]);
+     }
+    return rt;
+}
+
+// * /
+std::vector<double> evaluator::_mul_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    std::vector<double> v1 = _evaluate(root->get_child(0));
+    std::vector<double> v2 = _evaluate(root->get_child(1));
+    string op = root->get_text();
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        if (op.compare("*") == 0) rt.push_back(v1[i] * v2[i]);
+        else rt.push_back(v1[i] / v2[i]);
+    }
+    return rt;
+}
+
+// = != <>
+std::vector<double> evaluator::_equal_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    std::vector<double> v1 = _evaluate(root->get_child(0));
+    std::vector<double> v2 = _evaluate(root->get_child(1));
+    string op = root->get_text();
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        if (op.compare("=") == 0) rt.push_back(v1[i] == v2[i] ? 1 : 0);
+        else rt.push_back(v1[i] != v2[i] ? 1 : 0);
+    }
+    return rt;
+}
+
+// & &&
+std::vector<double> evaluator::_and_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    std::vector<double> v1 = _evaluate(root->get_child(0));
+    std::vector<double> v2 = _evaluate(root->get_child(1));
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        rt.push_back(v1[i] && v2[i] ? 1 : 0);
+    }
+    return rt;
+}
+
+// | ||
+std::vector<double> evaluator::_or_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    std::vector<double> v1 = _evaluate(root->get_child(0));
+    std::vector<double> v2 = _evaluate(root->get_child(1));
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        rt.push_back(v1[i] || v2[i] ? 1 : 0);
+    }
+    return rt;
+}
+
+// > >= < <=
+std::vector<double> evaluator::_rel_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    std::vector<double> v1 = _evaluate(root->get_child(0));
+    std::vector<double> v2 = _evaluate(root->get_child(1));
+    string op = root->get_text();
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        if (op.compare(">") == 0) rt.push_back(v1[i] > v2[i] ? 1 : 0);
+        else if (op.compare(">=") == 0) rt.push_back(v1[i] >= v2[i] ? 1 : 0);
+        else if (op.compare("<") == 0) rt.push_back(v1[i] < v2[i] ? 1 : 0);
+        else rt.push_back(v1[i] <= v2[i] ? 1 : 0);
     }
     return rt;
 }
 
 std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
     std::vector<double> rt;
+    
     ast_node_type ty = root->get_type();
     
     if (ty == ast_node_type::digit_literal) {
         rt.push_back(lib_math::string_2_double(root->get_text()));
     } else if (ty == ast_node_type::fun_express) {
         rt = _call_function(root->get_text(), root);
+    } else if (ty == ast_node_type::add_express) {
+        rt = _add_evalute(root);
+    } else if (ty == ast_node_type::mul_express) {
+        rt = _mul_evalute(root);
+    } else if (ty == ast_node_type::equal_express) {
+        rt = _equal_evalute(root);
+    } else if (ty == ast_node_type::and_express) {
+        rt = _and_evalute(root);
+    } else if (ty == ast_node_type::or_express) {
+        rt = _or_evalute(root);
+    } else if (ty == ast_node_type::rel_express) {
+        rt = _rel_evalute(root);
     }
     return rt;
+}
+
+evaluator::evaluator(std::vector<std::map<std::string, std::string>> dt) {
+    tb = defined_table();
+    data = dt;
 }
 
 std::map< std::string, std::vector<double> > evaluator::evaluate(ast_node::ptr root) {
@@ -58,9 +216,4 @@ std::map< std::string, std::vector<double> > evaluator::evaluate(ast_node::ptr r
         }
     }
     return rt;
-}
-
-evaluator::evaluator(std::vector<std::map<std::string, std::string>> dt) {
-    tb = defined_table();
-    data = dt;
 }

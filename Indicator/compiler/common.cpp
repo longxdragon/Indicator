@@ -18,17 +18,17 @@ defined_table::defined_table() {
     std::string ft[] = {
         "C", "L", "H", "O", "CLOSE", "LOW", "HIGH", "OPEN", "ISLASTBAR",
         "MA", "EMA", "SMA", "REF", "REFX", "HHV", "LLV", "AVEDEV",
-        "CROSS", "IF",
+        "CROSS", "IF", "BARSLAST", "BACKSET", "VALUEWHEN",
         "DRAWTEXT", "DRAWCOLORLINE"
     };
     int pr[] = {
         0, 0, 0, 0, 0, 0, 0, 0, 0,
         2, 2, 3, 2, 2, 2, 2, 2,
-        2, 3,
+        2, 3, 1, 2, 2,
         3, 4
     };
     std::string st[] = {
-        "NULL"
+        "NULL", "NODRAW"
     };
     for (int i = 0; i < length(ft) && i < length(pr); i++) {
         function_table.insert({ft[i], pr[i]});

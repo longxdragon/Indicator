@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "token_reader.hpp"
 #include "common.hpp"

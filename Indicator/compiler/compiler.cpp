@@ -17,6 +17,8 @@ compiler::compiler(std::vector<std::map<std::string, std::string>> dt) {
 }
 
 std::map< std::string, std::vector<double> > compiler::compile(std::string s) {
+    std::map< std::string, std::vector<double> > val;
+    
     lexer lxr = lexer();
     token_reader reader = lxr.tokenize(s);
     reader.dump();
@@ -30,10 +32,12 @@ std::map< std::string, std::vector<double> > compiler::compile(std::string s) {
     bool is = wkr.walker(node);
     if (is) {
         std::cout << "Parse walker lookup success!" << std::endl;
+        std::cout << std::endl;
+    } else {
+        return val;
     }
-    std::cout << std::endl;
     
     evaluator elr = evaluator(data);
-    std::map< std::string, std::vector<double> > val = elr.evaluate(node);
+    val = elr.evaluate(node);
     return val;
 }

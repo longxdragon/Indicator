@@ -37,7 +37,7 @@ enum dfa_state {
     double_or,      // || OR
     single_equal,   // =
     exclamatory_mark,   // !
-    no_equal,           // !=
+    no_equal,           // != <>
     
     add,            // +
     reduce,         // -
@@ -51,6 +51,7 @@ enum dfa_state {
     and_and,        // AND_AND
     
     assignment,     // :=
+    notes,          // //
     
     function_name,
     static_key

@@ -26,6 +26,12 @@ private:
     
     std::vector<double> _evaluate(ast_node::ptr root);
     std::vector<double> _call_function(std::string name, ast_node::ptr root);
+    std::vector<double> _add_evalute(ast_node::ptr root);
+    std::vector<double> _mul_evalute(ast_node::ptr root);
+    std::vector<double> _equal_evalute(ast_node::ptr root);
+    std::vector<double> _and_evalute(ast_node::ptr root);
+    std::vector<double> _or_evalute(ast_node::ptr root);
+    std::vector<double> _rel_evalute(ast_node::ptr root);
     
 public:
     evaluator(std::vector<std::map<std::string, std::string>> dt);

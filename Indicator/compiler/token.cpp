@@ -40,6 +40,7 @@ string token::format_st() {
         case divide: return "Divide"; break;
             
         case assignment: return "Assignment"; break;
+        case notes: return "Notes"; break;
             
         case function_name: return "Function"; break;
         case static_key: return "Static"; break;
