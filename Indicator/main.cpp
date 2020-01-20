@@ -127,10 +127,12 @@ int main(int argc, const char * argv[]) {
     HHH1:=VALUEWHEN(HHH,H);\
     LLL1:=VALUEWHEN(LLL,L);\
     H2:=VALUEWHEN(HHH,REF(HHH1,1));\
-    L2:=VALUEWHEN(LLL,REF(LLL1,1));";
+    L2:=VALUEWHEN(LLL,REF(LLL1,1));\
+    DRAWTEXT(HHH&&H2<HHH1,H,'高空');\
+    DRAWTEXT(LLL&&L2>LLL1,L,'低多');";
     
     compiler clr = compiler(data);
-    std::map< std::string, std::vector<double> > val = clr.compile(tx);
+    result val = clr.compile(tx);
     
     return 0;
 }

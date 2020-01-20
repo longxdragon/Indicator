@@ -33,6 +33,7 @@ public:
     static vector<double> is_lastbar(vector<map<string, string>> data);
     
     static vector<double> ma(vector<double> data, size_t n);
+    static vector<double> ma(vector<double> data, vector<double> n);
     
     static vector<double> ref(vector<double> data, size_t n);
     static vector<double> ref(vector<double> data, vector<double> n);
@@ -45,7 +46,7 @@ public:
     static vector<double> barslast(vector<double> data);
     static vector<double> backset(vector<double> data, size_t n);
     static vector<double> backset(vector<double> data, vector<double> n);
-    static vector<double> value_when(vector<double> data, vector<double> val);    
+    static vector<double> value_when(vector<double> data, vector<double> val);
 };
 
 #endif /* lib_math_hpp */

@@ -53,22 +53,38 @@ vector<double> lib_math::h(vector<map<string, string>> data) {
 }
 
 vector<double> lib_math::ma(vector<double> data, size_t n) {
-    std::vector<double> ma;
+    std::vector<double> rt;
     if (n < 1) {
-        return ma;
+        return rt;
     }
     double t = 0;
     for (size_t i = 0; i < data.size(); i++) {
         t += data[i];
         if (i < n - 1) {
-            ma.push_back(INVAILED_VALUE);
+            rt.push_back(t / (i+1));
         } else {
             if (i - n >= 0) t -= data[i - n];
             double v = t / n;
-            ma.push_back(v);
+            rt.push_back(v);
         }
     }
-    return ma;
+    return rt;
+}
+
+vector<double> lib_math::ma(vector<double> data, vector<double> n) {
+    std::vector<double> rt;
+    for (size_t i = 0; i < data.size(); i++) {
+        double t = 0;
+        size_t cnt = 0;
+        for (size_t j = 0; j < n[i]; j++) {
+            if (i >= j) {
+                t += data[i - j];
+                cnt++;
+            }
+        }
+        rt.push_back(t / cnt);
+    }
+    return rt;
 }
 
 vector<double> lib_math::is_lastbar(vector<map<string, string>> data) {
@@ -194,7 +210,7 @@ vector<double> lib_math::backset(vector<double> data, size_t n) {
     for (size_t i = 0; i < data.size(); i++) {
         rt.push_back(0);
     }
-    for (size_t i = data.size() - 1; i >= 0; i--) {
+    for (long i = data.size() - 1; i >= 0; i--) {
         if (data[i] != 0) {
             for (size_t j = 0; j < n; j++) {
                 if (i < j) continue;

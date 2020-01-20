@@ -8,6 +8,7 @@
 
 #include "evaluator.hpp"
 #include "lib_math.hpp"
+#include "lib_draw.hpp"
 
 std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr root) {
     std::vector<double> rt;
@@ -24,8 +25,10 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
     }  else if (name.compare("MA") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));  // just digit literal
-        if (v2.size()) {
+        if (v2.size() == 1) {
             rt = lib_math::ma(v1, (size_t)v2[0]);
+        } else {
+            rt = lib_math::ma(v1, v2);
         }
     } else if (name.compare("EMA") == 0) {
         std::cout << "Not implement func name : " << name << std::endl;
@@ -85,6 +88,7 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         rt = lib_math::backset(v1, v2);
+        
     } else if (name.compare("IF") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
@@ -92,6 +96,17 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
         rt = lib_math::eif(v1, v2, v3);
     } else {
         std::cout << "Not implement func name : " << name << std::endl;
+    }
+    return rt;
+}
+
+vector<map<string, string>> evaluator::_draw_function(std::string name, ast_node::ptr root) {
+    vector<map<string, string>> rt;
+    if (name.compare("DRAWTEXT") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        std::vector<std::string> v3 = _string_evalute(root->get_child(2));
+        rt = lib_draw::draw_text(v1, v2, v3);
     }
     return rt;
 }
@@ -172,13 +187,24 @@ std::vector<double> evaluator::_rel_evalute(ast_node::ptr root) {
     return rt;
 }
 
+std::vector<std::string> evaluator::_string_evalute(ast_node::ptr root) {
+    std::vector<string> rt;
+    if (root->get_type() == ast_node_type::string_literal) {
+        for (size_t i = 0; i < data.size(); i++) {
+            rt.push_back(root->get_text());
+        }
+    }
+    return rt;
+}
+
 std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
     std::vector<double> rt;
-    
     ast_node_type ty = root->get_type();
     
     if (ty == ast_node_type::digit_literal) {
-        rt.push_back(lib_math::string_2_double(root->get_text()));
+        for (size_t i = 0; i < data.size(); i++) {
+            rt.push_back(lib_math::string_2_double(root->get_text()));
+        }
     } else if (ty == ast_node_type::fun_express) {
         rt = _call_function(root->get_text(), root);
     } else if (ty == ast_node_type::add_express) {
@@ -193,6 +219,14 @@ std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
         rt = _or_evalute(root);
     } else if (ty == ast_node_type::rel_express) {
         rt = _rel_evalute(root);
+    } else if (ty == ast_node_type::identifier) {
+        string name = root->get_text();
+        std::map< std::string, std::vector<double> >::iterator iter = variables.find(name);
+        if (iter != variables.end()) {
+            rt = iter->second;
+        } else {
+            std::cout << "Can not found var : %@" << name << std::endl;
+        }
     }
     return rt;
 }
@@ -202,8 +236,10 @@ evaluator::evaluator(std::vector<std::map<std::string, std::string>> dt) {
     data = dt;
 }
 
-std::map< std::string, std::vector<double> > evaluator::evaluate(ast_node::ptr root) {
-    std::map< std::string, std::vector<double> > rt;
+result evaluator::evaluate(ast_node::ptr root) {
+    std::map< std::string, std::vector<double> > value_1;
+    map< string, vector<map<string, string>> > value_2;
+    size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
         if (node->get_type() == ast_node_type::assignment) {
             ast_node::ptr c1 = node->get_child(0);
@@ -211,9 +247,22 @@ std::map< std::string, std::vector<double> > evaluator::evaluate(ast_node::ptr r
             std::vector<double> val = _evaluate(c2);
             if (val.size()) {
                 variables.insert({c1->get_text(), val});
-                rt.insert({c1->get_text(), val});
+                value_1.insert({c1->get_text(), val});
+            }
+        } else if (node->get_type() == ast_node_type::fun_express) {
+            string name = node->get_text();
+            if (name.find("DRAW") != string::npos) {
+                vector<map<string, string>> val = _draw_function(name, node);
+                transform(name.begin(), name.end(), name.begin(), (int (*)(int))tolower);
+                string k = name + "_" + to_string(idx);
+                if (val.size()) {
+                    value_2[k] = val;
+                }
+            } else {
+                
             }
         }
+        idx ++;
     }
-    return rt;
+    return result(value_1, value_2);
 }

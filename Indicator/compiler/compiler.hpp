@@ -14,12 +14,17 @@
 #include <map>
 #include <string>
 
+#include "result.hpp"
+
+using namespace std;
+
 class compiler {
-    std::vector<std::map<std::string, std::string>> data;
+    
+    vector<map<string, string>> data;
     
 public:
-    compiler(std::vector<std::map<std::string, std::string>> dt);
-    std::map< std::string, std::vector<double> > compile(std::string s);
+    compiler(vector<map<string, string>> dt);
+    result compile(string s);
 };
 
 #endif /* compiler_hpp */
