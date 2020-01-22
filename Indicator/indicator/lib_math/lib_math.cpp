@@ -87,6 +87,30 @@ vector<double> lib_math::ma(vector<double> data, vector<double> n) {
     return rt;
 }
 
+vector<double> lib_math::ema(vector<double> data, size_t n) {
+    std::vector<double> rt;
+    for (size_t i = 0; i < data.size(); i++) {
+        if (i == 0) rt.push_back(data[i]);
+        else {
+            double v = data[i] * 2.f/(n+1.f) + rt.back() * (n-1.f)/(n+1.f);
+            rt.push_back(v);
+        }
+    }
+    return rt;
+}
+
+vector<double> lib_math::sma(vector<double> data, size_t n, size_t m) {
+    std::vector<double> rt;
+    for (size_t i = 0; i < data.size(); i++) {
+        if (i == 0) rt.push_back(data[i]);
+        else {
+            double v = data[i] * m/(n+0.f) + rt.back() * (n-m+0.f)/(n+0.f);
+            rt.push_back(v);
+        }
+    }
+    return rt;
+}
+
 vector<double> lib_math::is_lastbar(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
@@ -96,19 +120,19 @@ vector<double> lib_math::is_lastbar(vector<map<string, string>> data) {
     return rt;
 }
 
-vector<double> lib_math::ref(vector<double> data, size_t n) {
+vector<double> lib_math::ref(vector<double> data, vector<double> n) {
     std::vector<double> rt;
-    for (size_t i = 0; i < data.size(); i++) {
-        if (i >= n) rt.push_back(data[i - n]);
+    for (size_t i = 0; i < data.size() && i < n.size(); i++) {
+        if (i >= n[i]) rt.push_back(data[i - n[i]]);
         else rt.push_back(0);
     }
     return rt;
 }
 
-vector<double> lib_math::ref(vector<double> data, vector<double> n) {
+vector<double> lib_math::refx(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
-        if (i >= n[i]) rt.push_back(data[i - n[i]]);
+        if (i + n[i] < data.size()) rt.push_back(data[i + n[i]]);
         else rt.push_back(0);
     }
     return rt;
@@ -188,37 +212,35 @@ vector<double> lib_math::eif(vector<double> data, vector<double> v1, vector<doub
     return rt;
 }
 
-vector<double> lib_math::barslast(vector<double> data) {
+vector<double> lib_math::cross(vector<double> v1, vector<double> v2) {
     std::vector<double> rt;
-    long cnt = -1;
-    for (size_t i = 0; i < data.size(); i++) {
-        double val = data[i];
-        if (cnt < 0) {
-            cnt = 0;
+    double pv1 = 0.0, pv2 = 0.0;
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        if (i == 0) {
             rt.push_back(0);
-            if (val != 0) cnt = 0;
-            continue;
+        } else {
+            rt.push_back((pv1 < pv2 && v1[i] >= v2[i]) ? 1 : 0);
         }
-        rt.push_back(++cnt);
-        if (val != 0) cnt = 0;
+        pv1 = v1[i];
+        pv2 = v2[i];
     }
     return rt;
 }
 
-vector<double> lib_math::backset(vector<double> data, size_t n) {
+vector<double> lib_math::barslast(vector<double> data) {
     std::vector<double> rt;
+    long cnt = 0;
     for (size_t i = 0; i < data.size(); i++) {
-        rt.push_back(0);
-    }
-    for (long i = data.size() - 1; i >= 0; i--) {
-        if (data[i] != 0) {
-            for (size_t j = 0; j < n; j++) {
-                if (i < j) continue;
-                rt[i - j] = 0;
-                i--;
-            }
+        if (i == 0) {
+            cnt = 0;
+            rt.push_back(0);
         } else {
-            rt[i] = 0;
+            if (data[i] == 0) {
+                rt.push_back(++cnt);
+            } else {
+                cnt = 0;
+                rt.push_back(cnt);
+            }
         }
     }
     return rt;
@@ -229,12 +251,11 @@ vector<double> lib_math::backset(vector<double> data, vector<double> n) {
     for (size_t i = 0; i < data.size(); i++) {
         rt.push_back(0);
     }
-    for (size_t i = data.size() - 1; i >= 0 && i < n.size(); i--) {
+    for (size_t i = 0; i < data.size(); i++) {
         if (data[i] != 0) {
             for (size_t j = 0; j < n[i]; j++) {
                 if (i < j) continue;
-                rt[i - j] = 0;
-                i--;
+                rt[i - j] = 1;
             }
         } else {
             rt[i] = 0;

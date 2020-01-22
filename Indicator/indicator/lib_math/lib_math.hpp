@@ -34,17 +34,19 @@ public:
     
     static vector<double> ma(vector<double> data, size_t n);
     static vector<double> ma(vector<double> data, vector<double> n);
+    static vector<double> ema(vector<double> data, size_t n);
+    static vector<double> sma(vector<double> data, size_t n, size_t m);
     
-    static vector<double> ref(vector<double> data, size_t n);
     static vector<double> ref(vector<double> data, vector<double> n);
+    static vector<double> refx(vector<double> data, vector<double> n);
     static vector<double> hhv(vector<double> data, size_t n);
     static vector<double> hhv(vector<double> data, vector<double> n);
     static vector<double> llv(vector<double> data, size_t n);
     static vector<double> llv(vector<double> data, vector<double> n);
     static vector<double> eif(vector<double> data, vector<double> v1, vector<double> v2);
+    static vector<double> cross(vector<double> v1, vector<double> v2);
     
     static vector<double> barslast(vector<double> data);
-    static vector<double> backset(vector<double> data, size_t n);
     static vector<double> backset(vector<double> data, vector<double> n);
     static vector<double> value_when(vector<double> data, vector<double> val);
 };

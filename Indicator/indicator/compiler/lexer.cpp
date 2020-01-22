@@ -52,6 +52,9 @@ dfa_state lexer::init_token(char ch) {
                 t.st = static_key;
             }
         }
+        if (t.st == string_literal) {
+            token_text = token_text.substr(1, token_text.size()-2);
+        }
         t.txt = token_text;
         list.push_back(t);
         

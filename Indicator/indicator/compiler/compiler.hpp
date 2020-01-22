@@ -20,10 +20,10 @@ using namespace std;
 
 class compiler {
     
-    vector<map<string, string>> data;
+    vector< map<string, string> > data;
     
 public:
-    compiler(vector<map<string, string>> dt);
+    compiler(vector<map <string, string> > dt);
     result compile(string s);
 };
 
