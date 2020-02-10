@@ -2,8 +2,8 @@
 //  main.cpp
 //  Indicator
 //
-//  Created by 许龙 on 2019/11/12.
-//  Copyright © 2019 许龙. All rights reserved.
+//  Created by 许龙 on 2020/2/10.
+//  Copyright © 2020 ldd. All rights reserved.
 //
 
 #include <iostream>
@@ -75,5 +75,3 @@ int main(int argc, const char * argv[]) {
         
     return 0;
 }
-
-
