@@ -32,7 +32,7 @@
 		62A42C5523F15EC900FB9203 /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A42C3D23F15EC900FB9203 /* parser.cpp */; };
 		62A42C5623F15EC900FB9203 /* compiler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 62A42C3E23F15EC900FB9203 /* compiler.hpp */; };
 		62A42C5723F15EC900FB9203 /* token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A42C3F23F15EC900FB9203 /* token.cpp */; };
-		62A42C5A23F15F5300FB9203 /* INOCCompiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A42C5823F15F5300FB9203 /* INOCCompiler.h */; };
+		62A42C5A23F15F5300FB9203 /* INOCCompiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A42C5823F15F5300FB9203 /* INOCCompiler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62A42C5B23F15F5300FB9203 /* INOCCompiler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A42C5923F15F5300FB9203 /* INOCCompiler.mm */; };
 /* End PBXBuildFile section */
 
@@ -163,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62A42C4823F15EC900FB9203 /* parse_walker.hpp in Headers */,
+				62A42C5A23F15F5300FB9203 /* INOCCompiler.h in Headers */,
 				62A42C4323F15EC900FB9203 /* lib_math.hpp in Headers */,
 				62A42C4523F15EC900FB9203 /* parser.hpp in Headers */,
 				62A42C4023F15EC900FB9203 /* lib_draw.hpp in Headers */,
@@ -172,7 +173,6 @@
 				62A42C4C23F15EC900FB9203 /* result.hpp in Headers */,
 				62A42C5323F15EC900FB9203 /* evaluator.hpp in Headers */,
 				62A42C1F23F15E9F00FB9203 /* INCompiler.h in Headers */,
-				62A42C5A23F15F5300FB9203 /* INOCCompiler.h in Headers */,
 				62A42C4723F15EC900FB9203 /* token.hpp in Headers */,
 				62A42C4F23F15EC900FB9203 /* lexer.hpp in Headers */,
 				62A42C5123F15EC900FB9203 /* token_reader.hpp in Headers */,
@@ -392,11 +392,14 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = INCompiler/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.longxdragon.INCompiler;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -414,11 +417,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = INCompiler/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.longxdragon.INCompiler;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
