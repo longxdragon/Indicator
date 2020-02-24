@@ -77,6 +77,12 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
     } else if (name.compare("AVEDEV") == 0) {
         std::cout << "Not implement func name : " << name << std::endl;
         
+    } else if (name.compare("STD") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        if (v2.size() > 0) {
+            rt = lib_math::std(v1, (size_t)v2[0]);
+        }
     } else if (name.compare("CROSS") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
@@ -107,6 +113,21 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
         std::vector<double> v2 = _evaluate(root->get_child(1));
         std::vector<double> v3 = _evaluate(root->get_child(2));
         rt = lib_math::eif(v1, v2, v3);
+        
+    } else if (name.compare("MAX") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        rt = lib_math::max(v1, v2);
+        
+    } else if (name.compare("MIN") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        rt = lib_math::min(v1, v2);
+        
+    } else if (name.compare("ABS") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        rt = lib_math::abs(v1);
+        
     } else {
         std::cout << "Not implement func name : " << name << std::endl;
     }
@@ -238,7 +259,7 @@ std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
         if (iter != variables.end()) {
             rt = iter->second;
         } else {
-            std::cout << "Can not found var : %@" << name << std::endl;
+            std::cout << "Can not found var : " << name << std::endl;
         }
     }
     return rt;

@@ -12,11 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface INOCCompiler : NSObject
 
-- (instancetype)initWithDataSource:(NSArray<NSDictionary *> *)datas;
-
-- (NSDictionary *)compile;
-
-- (void)addCode:(NSString *)code forKey:(NSString *)key;
+- (NSDictionary *)compileKlineDataSource:(NSArray<NSDictionary *> *)datas formula:(NSString *)formula;
 
 @end
 

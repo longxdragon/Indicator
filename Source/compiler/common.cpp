@@ -17,14 +17,16 @@ int length(T& arr) {
 defined_table::defined_table() {
     std::string ft[] = {
         "C", "L", "H", "O", "CLOSE", "LOW", "HIGH", "OPEN", "ISLASTBAR",
-        "MA", "EMA", "SMA", "REF", "REFX", "HHV", "LLV", "AVEDEV",
-        "CROSS", "IF", "BARSLAST", "BACKSET", "VALUEWHEN",
+        "BARSLAST", "ABS",
+        "MA", "EMA", "SMA", "REF", "REFX", "HHV", "LLV", "AVEDEV", "MAX", "MIN", "STD",
+        "CROSS", "IF", "BACKSET", "VALUEWHEN",
         "DRAWTEXT", "DRAWCOLORLINE"
     };
     int pr[] = {
         0, 0, 0, 0, 0, 0, 0, 0, 0,
-        2, 2, 3, 2, 2, 2, 2, 2,
-        2, 3, 1, 2, 2,
+        1, 1,
+        2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2,
+        2, 3, 2, 2,
         3, 4
     };
     std::string st[] = {

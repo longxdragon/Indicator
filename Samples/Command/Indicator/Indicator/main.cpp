@@ -67,11 +67,18 @@ int main(int argc, const char * argv[]) {
     
     string tx = "\
     MA55:=MA(C,55);\
-    DRAWTEXT(CROSS(EMA(C,5),EMA(C,10)),L,'开多');\
-    DRAWTEXT(CROSS(EMA(C,10),EMA(C,5)),H,'开空');";
+    \
+    //压力支撑1\
+    MAL:=30;\
+    FACTOR:=3;\
+    TR:= MAX(MAX((HIGH-LOW),ABS(REF(CLOSE,1)-HIGH)),ABS(REF(CLOSE,1)-LOW));\
+    ATR:= MA(TR,50);\
+    CURRDN:=MA(CLOSE,MAL)+ ATR*FACTOR;\
+    CURRUP:=MA(CLOSE,MAL)- ATR*FACTOR;\
+    ";
     
     compiler clr = compiler(data);
-    result val = clr.compile(tx);
+    result val = clr.compile("UDD:=2 + 2*STD(CLOSE,26);");
         
     return 0;
 }

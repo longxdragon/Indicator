@@ -15,6 +15,7 @@
 #include <map>
 #include <string>
 #include <deque>
+#include <cmath>
 
 #define INVAILED_VALUE -100000
 
@@ -36,6 +37,11 @@ public:
     static vector<double> ma(vector<double> data, vector<double> n);
     static vector<double> ema(vector<double> data, size_t n);
     static vector<double> sma(vector<double> data, size_t n, size_t m);
+    
+    static vector<double> abs(vector<double> data);
+    static vector<double> max(vector<double> v1, vector<double> v2);
+    static vector<double> min(vector<double> v1, vector<double> v2);
+    static vector<double> std(vector<double> v1, size_t n);
     
     static vector<double> ref(vector<double> data, vector<double> n);
     static vector<double> refx(vector<double> data, vector<double> n);

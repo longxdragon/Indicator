@@ -111,6 +111,48 @@ vector<double> lib_math::sma(vector<double> data, size_t n, size_t m) {
     return rt;
 }
 
+vector<double> lib_math::abs(vector<double> data) {
+    std::vector<double> rt;
+    for (size_t i = 0; i < data.size(); i++) {
+        rt.push_back(fabs(data[i]));
+    }
+    return rt;
+}
+
+vector<double> lib_math::max(vector<double> v1, vector<double> v2) {
+    std::vector<double> rt;
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        rt.push_back(v1[i] > v2[i] ? v1[i] : v2[i]);
+    }
+    return rt;
+}
+
+vector<double> lib_math::min(vector<double> v1, vector<double> v2) {
+    std::vector<double> rt;
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        rt.push_back(v1[i] < v2[i] ? v1[i] : v2[i]);
+    }
+    return rt;
+}
+
+vector<double> lib_math::std(vector<double> v1, size_t n) {
+    std::vector<double> rt;
+    std::vector<double> ma = lib_math::ma(v1, n);
+    for (size_t i = 0; i < ma.size() && i < v1.size(); i++) {
+        double total = 0;
+        size_t cnt = 0;
+        for (size_t j = 0; j < n; j++) {
+            if (i >= j) {
+                total += pow(v1[i-j] - ma[i], 2);
+                cnt ++;
+            }
+        }
+        double val = sqrt(total/cnt);
+        rt.push_back(val);
+    }
+    return rt;
+}
+
 vector<double> lib_math::is_lastbar(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
