@@ -1,0 +1,6 @@
+framework module INCompiler {
+  umbrella header "INCompiler.h"
+
+  export *
+  module * { export * }
+}

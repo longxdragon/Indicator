@@ -276,7 +276,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# 取得项目名字（get project name）\nFMK_NAME=${PROJECT_NAME}\n# 取得生成的静态库文件路径  （get framework path）\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n# 设置真机和模拟器生成的静态库路径 （set devcie framework and simulator framework path）\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n# 模拟器和真机编译 （device and simulator build）\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos clean build\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator clean build\n# 删除临时文件 （delete temp file）\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\nmkdir -p \"${INSTALL_DIR}\"\n# 拷贝真机framework文件到生成路径下 （copy device file to product path）\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/\"\n# 合并生成，替换真机framework里面的二进制文件，并且打开 （merger and open）\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/${FMK_NAME}\"\necho \"${DEVICE_DIR}/${FMK_NAME}\"\necho \"${SIMULATOR_DIR}/${FMK_NAME}\"\nrm -rf \"${WRK_DIR}\"\nopen \"${INSTALL_DIR}\"\n";
+			shellScript = "# 取得项目名字（get project name）\nFMK_NAME=${PROJECT_NAME}\n# 取得生成的静态库文件路径  （get framework path）\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n# 设置真机和模拟器生成的静态库路径 （set devcie framework and simulator framework path）\nWRK_DIR=build\nDEVICE_DIR=${BUILD_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${BUILD_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n# 模拟器和真机编译 （device and simulator build）\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos clean build BUILD_DIR=\"${BUILD_DIR}\"\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator clean build BUILD_DIR=\"${BUILD_DIR}\"\n# 删除临时文件 （delete temp file）\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\nmkdir -p \"${INSTALL_DIR}\"\n# 拷贝真机framework文件到生成路径下 （copy device file to product path）\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/\"\n# 合并生成，替换真机framework里面的二进制文件，并且打开 （merger and open）\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/${FMK_NAME}\"\n# 删除build的文件\nrm -r \"${WRK_DIR}\"\n# 打开findle\nopen \"${INSTALL_DIR}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -436,6 +436,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = staticlib;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.longxdragon.INCompiler;
@@ -461,6 +462,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.longxdragon.INCompiler;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
