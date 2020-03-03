@@ -13,66 +13,66 @@
 std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr root) {
     std::vector<double> rt;
     if (name.compare("C") == 0 || name.compare("CLOSE") == 0) {
-        rt = lib_math::c(data);
+        rt = lib_math::dd_c(data);
         
     } else if (name.compare("O") == 0 || name.compare("OPEN") == 0) {
-        rt = lib_math::o(data);
+        rt = lib_math::dd_o(data);
         
     } else if (name.compare("H") == 0 || name.compare("HIGH") == 0) {
-        rt = lib_math::h(data);
+        rt = lib_math::dd_h(data);
         
     } else if (name.compare("L") == 0 || name.compare("LOW") == 0) {
-        rt = lib_math::l(data);
+        rt = lib_math::dd_l(data);
         
     } else if (name.compare("ISLASTBAR") == 0) {
-        rt = lib_math::is_lastbar(data);
+        rt = lib_math::dd_is_lastbar(data);
         
     }  else if (name.compare("MA") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));  // just digit literal
         if (v2.size() == 1) {
-            rt = lib_math::ma(v1, (size_t)v2[0]);
+            rt = lib_math::dd_ma(v1, (size_t)v2[0]);
         } else {
-            rt = lib_math::ma(v1, v2);
+            rt = lib_math::dd_ma(v1, v2);
         }
     } else if (name.compare("EMA") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         if (v2.size() > 0) {
-            rt = lib_math::ema(v1, (size_t)v2[0]);
+            rt = lib_math::dd_ema(v1, (size_t)v2[0]);
         }
     } else if (name.compare("SMA") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         std::vector<double> v3 = _evaluate(root->get_child(2));
         if (v2.size() > 0 && v3.size() > 0) {
-            rt = lib_math::sma(v1, (size_t)v2[0], (size_t)v3[0]);
+            rt = lib_math::dd_sma(v1, (size_t)v2[0], (size_t)v3[0]);
         }
     } else if (name.compare("REF") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::ref(v1, v2);
+        rt = lib_math::dd_ref(v1, v2);
         
     } else if (name.compare("REFX") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::refx(v1, v2);
+        rt = lib_math::dd_refx(v1, v2);
         
     } else if (name.compare("HHV") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         if (v2.size() == 1) {
-            rt = lib_math::hhv(v1, (size_t)v2[0]);
+            rt = lib_math::dd_hhv(v1, (size_t)v2[0]);
         } else {
-            rt = lib_math::hhv(v1, v2);
+            rt = lib_math::dd_hhv(v1, v2);
         }
     } else if (name.compare("LLV") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         if (v2.size() == 1) {
-            rt = lib_math::llv(v1, (size_t)v2[0]);
+            rt = lib_math::dd_llv(v1, (size_t)v2[0]);
         } else {
-            rt = lib_math::llv(v1, v2);
+            rt = lib_math::dd_llv(v1, v2);
         }
     } else if (name.compare("AVEDEV") == 0) {
         std::cout << "Not implement func name : " << name << std::endl;
@@ -81,52 +81,52 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         if (v2.size() > 0) {
-            rt = lib_math::std(v1, (size_t)v2[0]);
+            rt = lib_math::dd_std(v1, (size_t)v2[0]);
         }
     } else if (name.compare("CROSS") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::cross(v1, v2);
+        rt = lib_math::dd_cross(v1, v2);
         
     } else if (name.compare("IF") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         std::vector<double> v3 = _evaluate(root->get_child(2));
-        rt = lib_math::eif(v1, v2, v3);
+        rt = lib_math::dd_eif(v1, v2, v3);
         
     } else if (name.compare("BARSLAST") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
-        rt = lib_math::barslast(v1);
+        rt = lib_math::dd_barslast(v1);
         
     } else if (name.compare("BACKSET") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::backset(v1, v2);
+        rt = lib_math::dd_backset(v1, v2);
         
     } else if (name.compare("VALUEWHEN") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::value_when(v1, v2);
+        rt = lib_math::dd_value_when(v1, v2);
         
     } else if (name.compare("IF") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
         std::vector<double> v3 = _evaluate(root->get_child(2));
-        rt = lib_math::eif(v1, v2, v3);
+        rt = lib_math::dd_eif(v1, v2, v3);
         
     } else if (name.compare("MAX") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::max(v1, v2);
+        rt = lib_math::dd_max(v1, v2);
         
     } else if (name.compare("MIN") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
-        rt = lib_math::min(v1, v2);
+        rt = lib_math::dd_min(v1, v2);
         
     } else if (name.compare("ABS") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
-        rt = lib_math::abs(v1);
+        rt = lib_math::dd_abs(v1);
         
     } else {
         std::cout << "Not implement func name : " << name << std::endl;

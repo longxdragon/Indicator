@@ -12,7 +12,6 @@
 #include <map>
 
 #include "compiler.hpp"
-#include "lib_math.hpp"
 
 using namespace std;
 
@@ -56,15 +55,6 @@ int main(int argc, const char * argv[]) {
     data.push_back(item_4);
     data.push_back(item_5);
     
-    vector<double> n;
-    n.push_back(1);
-    n.push_back(0);
-    n.push_back(1);
-    n.push_back(0);
-    n.push_back(0);
-    vector<double> rt = lib_math::eif(n, lib_math::c(data), lib_math::o(data));
-    
-    
     string tx = "\
     MA55:=MA(C,55);\
     \
@@ -77,8 +67,8 @@ int main(int argc, const char * argv[]) {
     CURRUP:=MA(CLOSE,MAL)- ATR*FACTOR;\
     ";
     
-    compiler clr = compiler(data);
-    result val = clr.compile("UDD:=2 + 2*STD(CLOSE,26);");
+//    compiler clr = compiler(data);
+//    result val = clr.compile("UDD:=2 + 2*STD(CLOSE,26);");
         
     return 0;
 }

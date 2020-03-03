@@ -16,7 +16,7 @@ int lib_math::string_2_int(string s) {
     return atoi(const_cast<const char *>(s.c_str()));
 }
 
-vector<double> lib_math::c(vector<map<string, string>> data) {
+vector<double> lib_math::dd_c(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
@@ -25,7 +25,7 @@ vector<double> lib_math::c(vector<map<string, string>> data) {
     return rt;
 }
 
-vector<double> lib_math::o(vector<map<string, string>> data) {
+vector<double> lib_math::dd_o(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
@@ -34,7 +34,7 @@ vector<double> lib_math::o(vector<map<string, string>> data) {
     return rt;
 }
 
-vector<double> lib_math::l(vector<map<string, string>> data) {
+vector<double> lib_math::dd_l(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
@@ -43,7 +43,7 @@ vector<double> lib_math::l(vector<map<string, string>> data) {
     return rt;
 }
 
-vector<double> lib_math::h(vector<map<string, string>> data) {
+vector<double> lib_math::dd_h(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
@@ -52,7 +52,7 @@ vector<double> lib_math::h(vector<map<string, string>> data) {
     return rt;
 }
 
-vector<double> lib_math::ma(vector<double> data, size_t n) {
+vector<double> lib_math::dd_ma(vector<double> data, size_t n) {
     std::vector<double> rt;
     if (n < 1) {
         return rt;
@@ -71,7 +71,7 @@ vector<double> lib_math::ma(vector<double> data, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::ma(vector<double> data, vector<double> n) {
+vector<double> lib_math::dd_ma(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         double t = 0;
@@ -87,7 +87,7 @@ vector<double> lib_math::ma(vector<double> data, vector<double> n) {
     return rt;
 }
 
-vector<double> lib_math::ema(vector<double> data, size_t n) {
+vector<double> lib_math::dd_ema(vector<double> data, size_t n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         if (i == 0) rt.push_back(data[i]);
@@ -99,7 +99,7 @@ vector<double> lib_math::ema(vector<double> data, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::sma(vector<double> data, size_t n, size_t m) {
+vector<double> lib_math::dd_sma(vector<double> data, size_t n, size_t m) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         if (i == 0) rt.push_back(data[i]);
@@ -111,7 +111,7 @@ vector<double> lib_math::sma(vector<double> data, size_t n, size_t m) {
     return rt;
 }
 
-vector<double> lib_math::abs(vector<double> data) {
+vector<double> lib_math::dd_abs(vector<double> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         rt.push_back(fabs(data[i]));
@@ -119,7 +119,7 @@ vector<double> lib_math::abs(vector<double> data) {
     return rt;
 }
 
-vector<double> lib_math::max(vector<double> v1, vector<double> v2) {
+vector<double> lib_math::dd_max(vector<double> v1, vector<double> v2) {
     std::vector<double> rt;
     for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
         rt.push_back(v1[i] > v2[i] ? v1[i] : v2[i]);
@@ -127,7 +127,7 @@ vector<double> lib_math::max(vector<double> v1, vector<double> v2) {
     return rt;
 }
 
-vector<double> lib_math::min(vector<double> v1, vector<double> v2) {
+vector<double> lib_math::dd_min(vector<double> v1, vector<double> v2) {
     std::vector<double> rt;
     for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
         rt.push_back(v1[i] < v2[i] ? v1[i] : v2[i]);
@@ -135,9 +135,9 @@ vector<double> lib_math::min(vector<double> v1, vector<double> v2) {
     return rt;
 }
 
-vector<double> lib_math::std(vector<double> v1, size_t n) {
+vector<double> lib_math::dd_std(vector<double> v1, size_t n) {
     std::vector<double> rt;
-    std::vector<double> ma = lib_math::ma(v1, n);
+    std::vector<double> ma = lib_math::dd_ma(v1, n);
     for (size_t i = 0; i < ma.size() && i < v1.size(); i++) {
         double total = 0;
         size_t cnt = 0;
@@ -153,7 +153,7 @@ vector<double> lib_math::std(vector<double> v1, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::is_lastbar(vector<map<string, string>> data) {
+vector<double> lib_math::dd_is_lastbar(vector<map<string, string>> data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         if (i == data.size() - 1) rt.push_back(1);
@@ -162,7 +162,7 @@ vector<double> lib_math::is_lastbar(vector<map<string, string>> data) {
     return rt;
 }
 
-vector<double> lib_math::ref(vector<double> data, vector<double> n) {
+vector<double> lib_math::dd_ref(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
         if (i >= n[i]) rt.push_back(data[i - n[i]]);
@@ -171,7 +171,7 @@ vector<double> lib_math::ref(vector<double> data, vector<double> n) {
     return rt;
 }
 
-vector<double> lib_math::refx(vector<double> data, vector<double> n) {
+vector<double> lib_math::dd_refx(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
         if (i + n[i] < data.size()) rt.push_back(data[i + n[i]]);
@@ -180,7 +180,7 @@ vector<double> lib_math::refx(vector<double> data, vector<double> n) {
     return rt;
 }
 
-vector<double> lib_math::hhv(vector<double> data, size_t n) {
+vector<double> lib_math::dd_hhv(vector<double> data, size_t n) {
     std::vector<double> rt;
     std::deque<long> deq;
     for (long i = 0; i < data.size(); i++) {
@@ -197,7 +197,7 @@ vector<double> lib_math::hhv(vector<double> data, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::hhv(vector<double> data, vector<double> n) {
+vector<double> lib_math::dd_hhv(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (long i = 0; i < data.size() && i < n.size(); i++) {
         if (n[i] <= 0) {
@@ -213,7 +213,7 @@ vector<double> lib_math::hhv(vector<double> data, vector<double> n) {
     return rt;
 }
 
-vector<double> lib_math::llv(vector<double> data, size_t n) {
+vector<double> lib_math::dd_llv(vector<double> data, size_t n) {
     std::vector<double> rt;
     std::deque<long> deq;
     for (long i = 0; i < data.size(); i++) {
@@ -230,7 +230,7 @@ vector<double> lib_math::llv(vector<double> data, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::llv(vector<double> data, vector<double> n) {
+vector<double> lib_math::dd_llv(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (long i = 0; i < data.size() && i < n.size(); i++) {
         if (n[i] <= 0) {
@@ -246,7 +246,7 @@ vector<double> lib_math::llv(vector<double> data, vector<double> n) {
     return rt;
 }
 
-vector<double> lib_math::eif(vector<double> data, vector<double> v1, vector<double> v2) {
+vector<double> lib_math::dd_eif(vector<double> data, vector<double> v1, vector<double> v2) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < v1.size() && i < v2.size(); i++) {
         rt.push_back(data[i] != 0 ? v1[i] : v2[i]);
@@ -254,7 +254,7 @@ vector<double> lib_math::eif(vector<double> data, vector<double> v1, vector<doub
     return rt;
 }
 
-vector<double> lib_math::cross(vector<double> v1, vector<double> v2) {
+vector<double> lib_math::dd_cross(vector<double> v1, vector<double> v2) {
     std::vector<double> rt;
     double pv1 = 0.0, pv2 = 0.0;
     for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
@@ -269,7 +269,7 @@ vector<double> lib_math::cross(vector<double> v1, vector<double> v2) {
     return rt;
 }
 
-vector<double> lib_math::barslast(vector<double> data) {
+vector<double> lib_math::dd_barslast(vector<double> data) {
     std::vector<double> rt;
     long cnt = 0;
     for (size_t i = 0; i < data.size(); i++) {
@@ -288,7 +288,7 @@ vector<double> lib_math::barslast(vector<double> data) {
     return rt;
 }
 
-vector<double> lib_math::backset(vector<double> data, vector<double> n) {
+vector<double> lib_math::dd_backset(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         rt.push_back(0);
@@ -306,7 +306,7 @@ vector<double> lib_math::backset(vector<double> data, vector<double> n) {
     return rt;
 }
 
-vector<double> lib_math::value_when(vector<double> data, vector<double> val) {
+vector<double> lib_math::dd_value_when(vector<double> data, vector<double> val) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < val.size(); i++) {
         if (data[i] != 0) {

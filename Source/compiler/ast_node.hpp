@@ -13,6 +13,7 @@
 #include <string>
 #include <list>
 #include <iostream>
+#include <memory>
 
 enum class ast_node_type {
     root,

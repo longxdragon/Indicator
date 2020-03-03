@@ -27,34 +27,34 @@ public:
     static double string_2_double(string s);
     static int string_2_int(string s);
     
-    static vector<double> c(vector<map<string, string>> data);
-    static vector<double> o(vector<map<string, string>> data);
-    static vector<double> l(vector<map<string, string>> data);
-    static vector<double> h(vector<map<string, string>> data);
-    static vector<double> is_lastbar(vector<map<string, string>> data);
+    static vector<double> dd_c(vector<map<string, string>> data);
+    static vector<double> dd_o(vector<map<string, string>> data);
+    static vector<double> dd_l(vector<map<string, string>> data);
+    static vector<double> dd_h(vector<map<string, string>> data);
+    static vector<double> dd_is_lastbar(vector<map<string, string>> data);
     
-    static vector<double> ma(vector<double> data, size_t n);
-    static vector<double> ma(vector<double> data, vector<double> n);
-    static vector<double> ema(vector<double> data, size_t n);
-    static vector<double> sma(vector<double> data, size_t n, size_t m);
+    static vector<double> dd_ma(vector<double> data, size_t n);
+    static vector<double> dd_ma(vector<double> data, vector<double> n);
+    static vector<double> dd_ema(vector<double> data, size_t n);
+    static vector<double> dd_sma(vector<double> data, size_t n, size_t m);
     
-    static vector<double> abs(vector<double> data);
-    static vector<double> max(vector<double> v1, vector<double> v2);
-    static vector<double> min(vector<double> v1, vector<double> v2);
-    static vector<double> std(vector<double> v1, size_t n);
+    static vector<double> dd_abs(vector<double> data);
+    static vector<double> dd_max(vector<double> v1, vector<double> v2);
+    static vector<double> dd_min(vector<double> v1, vector<double> v2);
+    static vector<double> dd_std(vector<double> v1, size_t n);
     
-    static vector<double> ref(vector<double> data, vector<double> n);
-    static vector<double> refx(vector<double> data, vector<double> n);
-    static vector<double> hhv(vector<double> data, size_t n);
-    static vector<double> hhv(vector<double> data, vector<double> n);
-    static vector<double> llv(vector<double> data, size_t n);
-    static vector<double> llv(vector<double> data, vector<double> n);
-    static vector<double> eif(vector<double> data, vector<double> v1, vector<double> v2);
-    static vector<double> cross(vector<double> v1, vector<double> v2);
+    static vector<double> dd_ref(vector<double> data, vector<double> n);
+    static vector<double> dd_refx(vector<double> data, vector<double> n);
+    static vector<double> dd_hhv(vector<double> data, size_t n);
+    static vector<double> dd_hhv(vector<double> data, vector<double> n);
+    static vector<double> dd_llv(vector<double> data, size_t n);
+    static vector<double> dd_llv(vector<double> data, vector<double> n);
+    static vector<double> dd_eif(vector<double> data, vector<double> v1, vector<double> v2);
+    static vector<double> dd_cross(vector<double> v1, vector<double> v2);
     
-    static vector<double> barslast(vector<double> data);
-    static vector<double> backset(vector<double> data, vector<double> n);
-    static vector<double> value_when(vector<double> data, vector<double> val);
+    static vector<double> dd_barslast(vector<double> data);
+    static vector<double> dd_backset(vector<double> data, vector<double> n);
+    static vector<double> dd_value_when(vector<double> data, vector<double> val);
 };
 
 #endif /* lib_math_hpp */
