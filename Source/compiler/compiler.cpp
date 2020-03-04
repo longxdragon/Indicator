@@ -12,7 +12,7 @@
 #include "parse_walker.hpp"
 #include "evaluator.hpp"
 
-compiler::compiler(std::vector<std::map<std::string, std::string>> dt) {
+compiler::compiler(std::vector< std::map<std::string, std::string> > dt) {
     data = dt;
 }
 

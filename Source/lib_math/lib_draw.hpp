@@ -20,7 +20,7 @@ class lib_draw {
     
     
 public:
-    static vector<map<string, string>> draw_text(vector<double> data, vector<double> v1, vector<string> v2);
+    static vector< map<string, string> > draw_text(vector<double> data, vector<double> v1, vector<string> v2);
 };
 
 #endif /* lib_draw_hpp */

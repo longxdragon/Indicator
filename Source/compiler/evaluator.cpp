@@ -134,8 +134,8 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
     return rt;
 }
 
-vector<map<string, string>> evaluator::_draw_function(std::string name, ast_node::ptr root) {
-    vector<map<string, string>> rt;
+vector< map<string, string> > evaluator::_draw_function(std::string name, ast_node::ptr root) {
+    vector< map<string, string> > rt;
     if (name.compare("DRAWTEXT") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));
@@ -265,14 +265,14 @@ std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
     return rt;
 }
 
-evaluator::evaluator(std::vector<std::map<std::string, std::string>> dt) {
+evaluator::evaluator(std::vector< std::map<std::string, std::string> > dt) {
     tb = defined_table();
     data = dt;
 }
 
 result evaluator::evaluate(ast_node::ptr root) {
     std::map< std::string, std::vector<double> > value_1;
-    map< string, vector<map<string, string>> > value_2;
+    map< string, vector< map<string, string> > > value_2;
     size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
         if (node->get_type() == ast_node_type::assignment) {
@@ -286,7 +286,7 @@ result evaluator::evaluate(ast_node::ptr root) {
         } else if (node->get_type() == ast_node_type::fun_express) {
             string name = node->get_text();
             if (name.find("DRAW") != string::npos) {
-                vector<map<string, string>> val = _draw_function(name, node);
+                vector< map<string, string> > val = _draw_function(name, node);
                 transform(name.begin(), name.end(), name.begin(), (int (*)(int))tolower);
                 string k = name + "_" + to_string(idx);
                 if (val.size()) {

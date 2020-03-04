@@ -12,7 +12,7 @@ result::result() {
     
 }
 
-result::result(map< string, vector<double> > v1, map< string, vector<map<string, string>> > v2) {
+result::result(map< string, vector<double> > v1, map< string, vector< map<string, string> > > v2) {
     digit_values = v1;
     draw_text_values = v2;
 }
@@ -21,6 +21,6 @@ map< string, vector<double> > result::get_digit_values() {
     return digit_values;
 }
 
-map< string, vector<map<string, string>> > result::get_draw_text_values() {
+map< string, vector< map<string, string> > > result::get_draw_text_values() {
     return draw_text_values;
 }

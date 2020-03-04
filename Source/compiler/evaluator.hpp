@@ -25,11 +25,11 @@ class evaluator {
     
 private:
     defined_table tb;
-    std::vector<std::map<std::string, std::string>> data;
+    std::vector< std::map<std::string, std::string> > data;
     std::map< std::string, std::vector<double> > variables;
     
     std::vector<double> _call_function(std::string name, ast_node::ptr root);
-    vector<map<string, string>> _draw_function(std::string name, ast_node::ptr root);
+    vector< map<string, string> > _draw_function(std::string name, ast_node::ptr root);
     
     std::vector<double> _evaluate(ast_node::ptr root);
     std::vector<double> _add_evalute(ast_node::ptr root);
@@ -42,7 +42,7 @@ private:
     std::vector<std::string> _string_evalute(ast_node::ptr root);
     
 public:
-    evaluator(std::vector<std::map<std::string, std::string>> dt);
+    evaluator(std::vector< std::map<std::string, std::string> > dt);
     result evaluate(ast_node::ptr root);
 };
 

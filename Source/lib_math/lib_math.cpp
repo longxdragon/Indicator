@@ -16,38 +16,46 @@ int lib_math::string_2_int(string s) {
     return atoi(const_cast<const char *>(s.c_str()));
 }
 
-vector<double> lib_math::dd_c(vector<map<string, string>> data) {
+vector<double> lib_math::dd_c(vector< map<string, string> > data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
-        rt.push_back(string_2_double(m["c"]));
+        string c = m["c"];
+        if (c.size()) rt.push_back(string_2_double(c));
+        else rt.push_back(string_2_double(m["close"]));
     }
     return rt;
 }
 
-vector<double> lib_math::dd_o(vector<map<string, string>> data) {
+vector<double> lib_math::dd_o(vector< map<string, string> > data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
-        rt.push_back(string_2_double(m["o"]));
+        string o = m["o"];
+        if (o.size()) rt.push_back(string_2_double(o));
+        else rt.push_back(string_2_double(m["open"]));
     }
     return rt;
 }
 
-vector<double> lib_math::dd_l(vector<map<string, string>> data) {
+vector<double> lib_math::dd_l(vector< map<string, string> > data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
-        rt.push_back(string_2_double(m["l"]));
+        string l = m["l"];
+        if (l.size()) rt.push_back(string_2_double(l));
+        else rt.push_back(string_2_double(m["low"]));
     }
     return rt;
 }
 
-vector<double> lib_math::dd_h(vector<map<string, string>> data) {
+vector<double> lib_math::dd_h(vector< map<string, string> > data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         map<string, string> m = data[i];
-        rt.push_back(string_2_double(m["h"]));
+        string h = m["h"];
+        if (h.size()) rt.push_back(string_2_double(h));
+        else rt.push_back(string_2_double(m["high"]));
     }
     return rt;
 }
@@ -153,7 +161,7 @@ vector<double> lib_math::dd_std(vector<double> v1, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::dd_is_lastbar(vector<map<string, string>> data) {
+vector<double> lib_math::dd_is_lastbar(vector< map<string, string> > data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
         if (i == data.size() - 1) rt.push_back(1);

@@ -8,8 +8,8 @@
 
 #include "lib_draw.hpp"
 
-vector<map<string, string>> lib_draw::draw_text(vector<double> data, vector<double> v1, vector<string> v2) {
-    vector<map<string, string>> rt;
+vector< map<string, string> > lib_draw::draw_text(vector<double> data, vector<double> v1, vector<string> v2) {
+    vector< map<string, string> > rt;
     for (size_t i = 0; i < data.size() && i < v1.size() && i < v2.size(); i++) {
         map<string, string> item;
         item["pt"] = to_string(v1[i]);

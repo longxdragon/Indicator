@@ -19,31 +19,31 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     
     map<string, string> item_1;
-    item_1.insert({"c", "2012"});
+    item_1.insert({"close", "2012"});
     item_1.insert({"o", "2022"});
     item_1.insert({"h", "2025"});
     item_1.insert({"l", "2001"});
     
     map<string, string> item_2;
-    item_2.insert({"c", "2013"});
+    item_2.insert({"close", "2013"});
     item_2.insert({"o", "2022"});
     item_2.insert({"h", "2025"});
     item_2.insert({"l", "2001"});
     
     map<string, string> item_3;
-    item_3.insert({"c", "2010"});
+    item_3.insert({"close", "2010"});
     item_3.insert({"o", "2022"});
     item_3.insert({"h", "2025"});
     item_3.insert({"l", "2001"});
     
     map<string, string> item_4;
-    item_4.insert({"c", "2011"});
+    item_4.insert({"close", "2011"});
     item_4.insert({"o", "2022"});
     item_4.insert({"h", "2025"});
     item_4.insert({"l", "2001"});
     
     map<string, string> item_5;
-    item_5.insert({"c", "2013"});
+    item_5.insert({"close", "2013"});
     item_5.insert({"o", "2022"});
     item_5.insert({"h", "2025"});
     item_5.insert({"l", "2001"});
@@ -67,8 +67,8 @@ int main(int argc, const char * argv[]) {
     CURRUP:=MA(CLOSE,MAL)- ATR*FACTOR;\
     ";
     
-//    compiler clr = compiler(data);
-//    result val = clr.compile("UDD:=2 + 2*STD(CLOSE,26);");
+    compiler clr = compiler(data);
+    result val = clr.compile("UDD:=2 + 2*STD(CLOSE,26);");
         
     return 0;
 }
