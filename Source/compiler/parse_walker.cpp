@@ -42,9 +42,9 @@ bool parse_walker::lookup_variale(ast_node::ptr root) {
 bool parse_walker::lookup_statement(ast_node::ptr root) {
     for (ast_node::ptr child : root->get_child()) {
         ast_node_type ty = child->get_type();
-        if (ty != ast_node_type::assignment && ty != ast_node_type::fun_express) {
+        if (ty != ast_node_type::assignment && ty != ast_node_type::fun_express && ty != ast_node_type::return_assignment) {
             return false;
-        } else if (ty == ast_node_type::assignment) {
+        } else if (ty == ast_node_type::assignment || ty == ast_node_type::return_assignment) {
             ast_node::ptr node = child->get_child(0);
             if (node != nullptr && node->get_type() == ast_node_type::identifier && child->get_child().size() == 2) {
                 var_map.insert({node->get_text(), true});  // store all variable

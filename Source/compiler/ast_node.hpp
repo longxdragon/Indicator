@@ -24,6 +24,8 @@ enum class ast_node_type {
     static_literal,
     
     assignment,
+    return_assignment,
+    
     or_express,
     and_express,
     equal_express,

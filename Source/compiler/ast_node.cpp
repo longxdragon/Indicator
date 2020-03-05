@@ -53,6 +53,7 @@ std::string format_st(ast_node_type type) {
         case ast_node_type::string_literal: return "String"; break;
         case ast_node_type::static_literal: return "Static"; break;
         case ast_node_type::assignment: return "Assignment"; break;
+        case ast_node_type::return_assignment: return "ReturnAssign"; break;
         case ast_node_type::or_express: return "Or"; break;
         case ast_node_type::and_express: return "And"; break;
         case ast_node_type::equal_express: return "Equal"; break;

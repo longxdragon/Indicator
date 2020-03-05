@@ -227,7 +227,8 @@ ast_node::ptr assignment_express(token_reader& reader) {
             reader.read();
             ast_node::ptr child_2 = or_express(reader);
             if (child_2 != nullptr) {
-                node = ast_node::create(ast_node_type::assignment, t.txt);
+                if (t.st == dfa_state::colon) node = ast_node::create(ast_node_type::return_assignment, t.txt);
+                else node = ast_node::create(ast_node_type::assignment, t.txt);
                 node->add_child(child_1);
                 node->add_child(child_2);
             } else {

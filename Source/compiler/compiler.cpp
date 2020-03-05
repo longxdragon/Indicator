@@ -17,11 +17,13 @@ compiler::compiler(std::vector< std::map<std::string, std::string> > dt) {
 }
 
 result compiler::compile(std::string s) {
+    
     lexer lxr = lexer();
     token_reader reader = lxr.tokenize(s);
     
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
+    node->dump();
     
     std::cout << std::endl;
     parse_walker wkr = parse_walker();

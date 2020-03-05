@@ -275,13 +275,15 @@ result evaluator::evaluate(ast_node::ptr root) {
     map< string, vector< map<string, string> > > value_2;
     size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
-        if (node->get_type() == ast_node_type::assignment) {
+        if (node->get_type() == ast_node_type::assignment || node->get_type() == ast_node_type::return_assignment) {
             ast_node::ptr c1 = node->get_child(0);
             ast_node::ptr c2 = node->get_child(1);
             std::vector<double> val = _evaluate(c2);
             if (val.size()) {
                 variables.insert({c1->get_text(), val});
-                value_1.insert({c1->get_text(), val});
+                if (node->get_type() == ast_node_type::return_assignment) {
+                    value_1.insert({c1->get_text(), val});
+                }
             }
         } else if (node->get_type() == ast_node_type::fun_express) {
             string name = node->get_text();
