@@ -23,9 +23,7 @@ result compiler::compile(std::string s) {
     
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
-    node->dump();
     
-    std::cout << std::endl;
     parse_walker wkr = parse_walker();
     bool is = wkr.walker(node);
     if (!is) {
