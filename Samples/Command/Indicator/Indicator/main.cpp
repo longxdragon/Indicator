@@ -17,37 +17,7 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    
-    map<string, string> item_1;
-    item_1.insert({"close", "2012"});
-    item_1.insert({"o", "2022"});
-    item_1.insert({"h", "2025"});
-    item_1.insert({"l", "2001"});
-    
-    map<string, string> item_2;
-    item_2.insert({"close", "2013"});
-    item_2.insert({"o", "2022"});
-    item_2.insert({"h", "2025"});
-    item_2.insert({"l", "2001"});
-    
-    map<string, string> item_3;
-    item_3.insert({"close", "2010"});
-    item_3.insert({"o", "2022"});
-    item_3.insert({"h", "2025"});
-    item_3.insert({"l", "2001"});
-    
-    map<string, string> item_4;
-    item_4.insert({"close", "2011"});
-    item_4.insert({"o", "2022"});
-    item_4.insert({"h", "2025"});
-    item_4.insert({"l", "2001"});
-    
-    map<string, string> item_5;
-    item_5.insert({"close", "2013"});
-    item_5.insert({"o", "2022"});
-    item_5.insert({"h", "2025"});
-    item_5.insert({"l", "2001"});
-    
+
     vector<map<string, string>> data;
     for (size_t i = 0; i < 1000; i++) {
         map<string, string> item;
@@ -63,26 +33,25 @@ int main(int argc, const char * argv[]) {
     //压力支撑1\
     MAL:=30;\
     FACTOR:=3;\
-    TR:= MAX(MAX((HIGH-LOW),ABS(REF(CLOSE,1)-HIGH)),ABS(REF(CLOSE,1)-LOW));\
+    REFCLOSE1:=REF(CLOSE,1);\
+    TR:= MAX(MAX((HIGH-LOW),ABS(REFCLOSE1-HIGH)),ABS(REFCLOSE1-LOW));\
     ATR:= MA(TR,50);\
     CURRDN:=MA(CLOSE,MAL)+ ATR*FACTOR;\
     CURRUP:=MA(CLOSE,MAL)- ATR*FACTOR;\
     核心点位C:VALUEWHEN(CURRDN=LLV(CURRDN,14),CURRDN);\
     核心点位G:VALUEWHEN(CURRUP=HHV(CURRUP,14),CURRUP);\
     \
-    TT:=VALUEWHEN(CURRDN=LLV(CURRDN,14),CURRDN);\
-    WW:=VALUEWHEN(CURRUP=HHV(CURRUP,14),CURRUP);\
+    TT:=核心点位C;\
+    WW:=核心点位G;\
     \
     //压力支撑2\
     X:=5;\
     Y:=15;\
-    TRR:= MAX(MAX((HIGH-LOW),ABS(REF(CLOSE,1)-HIGH)),ABS(REF(CLOSE,1)-LOW));\
-    ATRR:= MA(TRR,50);\
     STPL:=SMA(LOW,5,1);\
     STPH:=SMA(HIGH,5,1);\
     \
-    KK:=LLV(STPL,X)+Y/10*ATRR;\
-    II:=HHV(STPH,X)-Y/10*ATRR;\
+    KK:=LLV(STPL,X)+Y/10*ATR;\
+    II:=HHV(STPH,X)-Y/10*ATR;\
     \
     //压力支撑3\
     MID :=  MA(CLOSE,20);\
@@ -167,8 +136,13 @@ int main(int argc, const char * argv[]) {
     DRAWTEXT((CROSS(LLL1,C)&&C<WW&&C<II&&C<LDD)||(LLL&&L2>LLL1&&L<WW&&L<II&&L<LDD),L,'支撑');\
     ";
         
+    double b = (double)clock();
+    
     compiler clr = compiler(data);
     result val = clr.compile(tx);
+    
+    double e = (double)clock();
+    std::cout << " ---- " << (e - b)/CLOCKS_PER_SEC << std::endl;
     
     return 0;
 }

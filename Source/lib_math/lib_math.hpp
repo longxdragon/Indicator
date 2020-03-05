@@ -34,7 +34,6 @@ public:
     static vector<double> dd_is_lastbar(vector< map<string, string> > data);
     
     static vector<double> dd_ma(vector<double> data, size_t n);
-    static vector<double> dd_ma(vector<double> data, vector<double> n);
     static vector<double> dd_ema(vector<double> data, size_t n);
     static vector<double> dd_sma(vector<double> data, size_t n, size_t m);
     

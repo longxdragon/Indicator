@@ -13,7 +13,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <algorithm>
 
 #include "ast_node.hpp"
 #include "common.hpp"

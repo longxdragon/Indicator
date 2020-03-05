@@ -13,27 +13,53 @@
 std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr root) {
     std::vector<double> rt;
     if (name.compare("C") == 0 || name.compare("CLOSE") == 0) {
-        rt = lib_math::dd_c(data);
-        
+        std::map< std::string, std::vector<double> >::iterator iter = variables.find("C");
+        if (iter != variables.end()) {
+            rt = iter->second;
+        } else {
+            rt = lib_math::dd_c(data);
+            if (rt.size()) {
+                variables.insert({"C", rt});
+            }
+        }
     } else if (name.compare("O") == 0 || name.compare("OPEN") == 0) {
-        rt = lib_math::dd_o(data);
-        
+        std::map< std::string, std::vector<double> >::iterator iter = variables.find("C");
+        if (iter != variables.end()) {
+            rt = iter->second;
+        } else {
+            rt = lib_math::dd_o(data);
+            if (rt.size()) {
+                variables.insert({"O", rt});
+            }
+        }
     } else if (name.compare("H") == 0 || name.compare("HIGH") == 0) {
-        rt = lib_math::dd_h(data);
-        
+        std::map< std::string, std::vector<double> >::iterator iter = variables.find("H");
+        if (iter != variables.end()) {
+            rt = iter->second;
+        } else {
+            rt = lib_math::dd_h(data);
+            if (rt.size()) {
+                variables.insert({"H", rt});
+            }
+        }
     } else if (name.compare("L") == 0 || name.compare("LOW") == 0) {
-        rt = lib_math::dd_l(data);
-        
+        std::map< std::string, std::vector<double> >::iterator iter = variables.find("L");
+        if (iter != variables.end()) {
+            rt = iter->second;
+        } else {
+            rt = lib_math::dd_l(data);
+            if (rt.size()) {
+                variables.insert({"L", rt});
+            }
+        }
     } else if (name.compare("ISLASTBAR") == 0) {
         rt = lib_math::dd_is_lastbar(data);
         
     }  else if (name.compare("MA") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
         std::vector<double> v2 = _evaluate(root->get_child(1));  // just digit literal
-        if (v2.size() == 1) {
+        if (v2.size() > 0) {
             rt = lib_math::dd_ma(v1, (size_t)v2[0]);
-        } else {
-            rt = lib_math::dd_ma(v1, v2);
         }
     } else if (name.compare("EMA") == 0) {
         std::vector<double> v1 = _evaluate(root->get_child(0));
@@ -276,6 +302,9 @@ result evaluator::evaluate(ast_node::ptr root) {
     size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
         if (node->get_type() == ast_node_type::assignment || node->get_type() == ast_node_type::return_assignment) {
+            
+            double b = (double)clock();
+            
             ast_node::ptr c1 = node->get_child(0);
             ast_node::ptr c2 = node->get_child(1);
             std::vector<double> val = _evaluate(c2);
@@ -284,16 +313,25 @@ result evaluator::evaluate(ast_node::ptr root) {
                 if (node->get_type() == ast_node_type::return_assignment) {
                     value_1.insert({c1->get_text(), val});
                 }
+                
+                double e = (double)clock();
+                std::cout << c1->get_text() << " ---- " << (e - b)/CLOCKS_PER_SEC << std::endl;
             }
         } else if (node->get_type() == ast_node_type::fun_express) {
+            
+            double b = (double)clock();
+            
             string name = node->get_text();
             if (name.find("DRAW") != string::npos) {
                 vector< map<string, string> > val = _draw_function(name, node);
-                transform(name.begin(), name.end(), name.begin(), (int (*)(int))tolower);
                 string k = name + "_" + to_string(idx);
                 if (val.size()) {
                     value_2[k] = val;
                 }
+                
+                double e = (double)clock();
+                std::cout << name << " ---- " << (e - b)/CLOCKS_PER_SEC << std::endl;
+                
             } else {
                 
             }

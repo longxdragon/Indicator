@@ -79,22 +79,6 @@ vector<double> lib_math::dd_ma(vector<double> data, size_t n) {
     return rt;
 }
 
-vector<double> lib_math::dd_ma(vector<double> data, vector<double> n) {
-    std::vector<double> rt;
-    for (size_t i = 0; i < data.size(); i++) {
-        double t = 0;
-        size_t cnt = 0;
-        for (size_t j = 0; j < n[i]; j++) {
-            if (i >= j) {
-                t += data[i - j];
-                cnt++;
-            }
-        }
-        rt.push_back(t / cnt);
-    }
-    return rt;
-}
-
 vector<double> lib_math::dd_ema(vector<double> data, size_t n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
