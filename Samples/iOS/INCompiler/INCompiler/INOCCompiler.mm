@@ -46,7 +46,7 @@
         NSString *k = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
         NSMutableArray *v = [NSMutableArray new];
         for (int i = 0; i < val.size(); i++) {
-            [v addObject:@(val[i])];
+            [v addObject:[NSString stringWithFormat:@"%f", val[i]]];
         }
         res1[k] = v;
         iter2++;

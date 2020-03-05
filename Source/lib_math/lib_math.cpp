@@ -71,7 +71,7 @@ vector<double> lib_math::dd_ma(vector<double> data, size_t n) {
         if (i < n - 1) {
             rt.push_back(t / (i+1));
         } else {
-            if (i - n >= 0) t -= data[i - n];
+            if (i >= n) t -= data[i - n];
             double v = t / n;
             rt.push_back(v);
         }
