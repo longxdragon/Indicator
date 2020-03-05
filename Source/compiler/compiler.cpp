@@ -19,19 +19,14 @@ compiler::compiler(std::vector< std::map<std::string, std::string> > dt) {
 result compiler::compile(std::string s) {
     lexer lxr = lexer();
     token_reader reader = lxr.tokenize(s);
-    reader.dump();
     
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
-    node->dump();
     
     std::cout << std::endl;
     parse_walker wkr = parse_walker();
     bool is = wkr.walker(node);
-    if (is) {
-        std::cout << "Parse walker lookup success!" << std::endl;
-        std::cout << std::endl;
-    } else {
+    if (!is) {
         return result();
     }
     
