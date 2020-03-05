@@ -302,9 +302,6 @@ result evaluator::evaluate(ast_node::ptr root) {
     size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
         if (node->get_type() == ast_node_type::assignment || node->get_type() == ast_node_type::return_assignment) {
-            
-            double b = (double)clock();
-            
             ast_node::ptr c1 = node->get_child(0);
             ast_node::ptr c2 = node->get_child(1);
             std::vector<double> val = _evaluate(c2);
@@ -313,25 +310,15 @@ result evaluator::evaluate(ast_node::ptr root) {
                 if (node->get_type() == ast_node_type::return_assignment) {
                     value_1.insert({c1->get_text(), val});
                 }
-                
-                double e = (double)clock();
-                std::cout << c1->get_text() << " ---- " << (e - b)/CLOCKS_PER_SEC << std::endl;
             }
         } else if (node->get_type() == ast_node_type::fun_express) {
-            
-            double b = (double)clock();
-            
             string name = node->get_text();
             if (name.find("DRAW") != string::npos) {
                 vector< map<string, string> > val = _draw_function(name, node);
                 string k = name + "_" + to_string(idx);
                 if (val.size()) {
                     value_2[k] = val;
-                }
-                
-                double e = (double)clock();
-                std::cout << name << " ---- " << (e - b)/CLOCKS_PER_SEC << std::endl;
-                
+                }                
             } else {
                 
             }
