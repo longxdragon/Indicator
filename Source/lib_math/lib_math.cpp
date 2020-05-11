@@ -84,7 +84,7 @@ vector<double> lib_math::dd_ema(vector<double> data, size_t n) {
     for (size_t i = 0; i < data.size(); i++) {
         if (i == 0) rt.push_back(data[i]);
         else {
-            double v = data[i] * 2.f/(n+1.f) + rt.back() * (n-1.f)/(n+1.f);
+            double v = n < 1 ? 0 : data[i] * 2.f/(n+1.f) + rt.back() * (n-1.f)/(n+1.f);
             rt.push_back(v);
         }
     }
@@ -96,7 +96,7 @@ vector<double> lib_math::dd_sma(vector<double> data, size_t n, size_t m) {
     for (size_t i = 0; i < data.size(); i++) {
         if (i == 0) rt.push_back(data[i]);
         else {
-            double v = data[i] * m/(n+0.f) + rt.back() * (n-m+0.f)/(n+0.f);
+            double v = n < m ? 0 : data[i] * m/(n+0.f) + rt.back() * (n-m+0.f)/(n+0.f);
             rt.push_back(v);
         }
     }
@@ -139,7 +139,7 @@ vector<double> lib_math::dd_std(vector<double> v1, size_t n) {
                 cnt ++;
             }
         }
-        double val = sqrt(total/cnt);
+        double val = cnt > 0 ? sqrt(total/cnt) : 0;
         rt.push_back(val);
     }
     return rt;
@@ -148,8 +148,10 @@ vector<double> lib_math::dd_std(vector<double> v1, size_t n) {
 vector<double> lib_math::dd_is_lastbar(vector< map<string, string> > data) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size(); i++) {
-        if (i == data.size() - 1) rt.push_back(1);
-        else rt.push_back(0);
+        if (data.size() > 0) {
+            if (i == data.size() - 1) rt.push_back(1);
+            else rt.push_back(0);
+        }
     }
     return rt;
 }
@@ -157,7 +159,8 @@ vector<double> lib_math::dd_is_lastbar(vector< map<string, string> > data) {
 vector<double> lib_math::dd_ref(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
-        if (i >= n[i]) rt.push_back(data[i - n[i]]);
+        size_t nt = n[i] > 0 ? n[i] : 0;
+        if (i >= nt) rt.push_back(data[i - nt]);
         else rt.push_back(0);
     }
     return rt;
@@ -166,7 +169,8 @@ vector<double> lib_math::dd_ref(vector<double> data, vector<double> n) {
 vector<double> lib_math::dd_refx(vector<double> data, vector<double> n) {
     std::vector<double> rt;
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
-        if (i + n[i] < data.size()) rt.push_back(data[i + n[i]]);
+        size_t nt = n[i] > 0 ? n[i] : 0;
+        if (i + nt < data.size()) rt.push_back(data[i + nt]);
         else rt.push_back(0);
     }
     return rt;
@@ -174,9 +178,9 @@ vector<double> lib_math::dd_refx(vector<double> data, vector<double> n) {
 
 vector<double> lib_math::dd_hhv(vector<double> data, size_t n) {
     std::vector<double> rt;
-    std::deque<long> deq;
-    for (long i = 0; i < data.size(); i++) {
-        long x = i - n;
+    std::deque<size_t> deq;
+    for (size_t i = 0; i < data.size(); i++) {
+        size_t x = i >= n ? i - n : 0;
         if (deq.size() > 0 && deq.front() <= x) {
             deq.pop_front();
         }
@@ -191,13 +195,14 @@ vector<double> lib_math::dd_hhv(vector<double> data, size_t n) {
 
 vector<double> lib_math::dd_hhv(vector<double> data, vector<double> n) {
     std::vector<double> rt;
-    for (long i = 0; i < data.size() && i < n.size(); i++) {
-        if (n[i] <= 0) {
+    for (size_t i = 0; i < data.size() && i < n.size(); i++) {
+        size_t nt = n[i] > 0 ? n[i] : 0;
+        if (nt <= 0) {
             rt.push_back(data[i]);
         } else {
             double h = DBL_MIN;
-            for (long j = 0; j < n[i]; j++) {
-                if (i - j >= 0 && h < data[i - j]) h = data[i - j];
+            for (size_t j = 0; j < nt; j++) {
+                if (i >= j && h < data[i - j]) h = data[i - j];
             }
             rt.push_back(h);
         }
@@ -207,9 +212,9 @@ vector<double> lib_math::dd_hhv(vector<double> data, vector<double> n) {
 
 vector<double> lib_math::dd_llv(vector<double> data, size_t n) {
     std::vector<double> rt;
-    std::deque<long> deq;
-    for (long i = 0; i < data.size(); i++) {
-        long x = i - n;
+    std::deque<size_t> deq;
+    for (size_t i = 0; i < data.size(); i++) {
+        size_t x = i >= n ? i - n : 0;
         if (deq.size() > 0 && deq.front() <= x) {
             deq.pop_front();
         }
@@ -224,13 +229,14 @@ vector<double> lib_math::dd_llv(vector<double> data, size_t n) {
 
 vector<double> lib_math::dd_llv(vector<double> data, vector<double> n) {
     std::vector<double> rt;
-    for (long i = 0; i < data.size() && i < n.size(); i++) {
-        if (n[i] <= 0) {
+    for (size_t i = 0; i < data.size() && i < n.size(); i++) {
+        size_t nt = n[i] > 0 ? n[i] : 0;
+        if (nt <= 0) {
             rt.push_back(data[i]);
         } else {
             double l = DBL_MAX;
-            for (long j = 0; j < n[i]; j++) {
-                if (i - j >= 0 && l > data[i - j]) l = data[i - j];
+            for (size_t j = 0; j < nt; j++) {
+                if (i >= j && l > data[i - j]) l = data[i - j];
             }
             rt.push_back(l);
         }

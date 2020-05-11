@@ -19,12 +19,40 @@ int main(int argc, const char * argv[]) {
     // insert code here...
 
     vector<map<string, string>> data;
-    for (size_t i = 0; i < 1000; i++) {
+    for (size_t i = 0; i < 26; i++) {
         map<string, string> item;
-        item.insert({"c", "2013"});
+        item.insert({"l", "2013"});
         item.insert({"o", "2022"});
         item.insert({"h", "2025"});
-        item.insert({"l", "2001"});
+        switch (i) {
+            case 0: item.insert({"c", "451.6"}); break;
+            case 1: item.insert({"c", "449.6"}); break;
+            case 2: item.insert({"c", "458.9"}); break;
+            case 3: item.insert({"c", "463.5"}); break;
+            case 4: item.insert({"c", "458.0"}); break;
+            case 5: item.insert({"c", "466.2"}); break;
+            case 6: item.insert({"c", "480.2"}); break;
+            case 7: item.insert({"c", "489.6"}); break;
+            case 8: item.insert({"c", "499.7"}); break;
+            case 9: item.insert({"c", "479.1"}); break;
+            case 10: item.insert({"c", "464.0"}); break;
+            case 11: item.insert({"c", "447.2"}); break;
+            case 12: item.insert({"c", "404.9"}); break;
+            case 13: item.insert({"c", "408.2"}); break;
+            case 14: item.insert({"c", "415.4"}); break;
+            case 15: item.insert({"c", "353.5"}); break;
+            case 16: item.insert({"c", "357.3"}); break;
+            case 17: item.insert({"c", "267.1"}); break;
+            case 18: item.insert({"c", "244.9"}); break;
+            case 19: item.insert({"c", "255.6"}); break;
+            case 20: item.insert({"c", "283.5"}); break;
+            case 21: item.insert({"c", "290.0"}); break;
+            case 22: item.insert({"c", "253.7"}); break;
+            case 23: item.insert({"c", "231.1"}); break;
+            case 24: item.insert({"c", "229.0"}); break;
+            case 25: item.insert({"c", "248.6"}); break;
+            default: break;
+        }
         data.push_back(item);
     }
     
@@ -121,7 +149,7 @@ int main(int argc, const char * argv[]) {
     FG4:=BACKSET(REFX(GT3,1)=0 AND GT3<DT3 AND REFX(H,1)>=REF(H,GT3),GT3+1);\
     FD4:=BACKSET(REFX(DT3,1)=0 AND DT3<GT3 AND REFX(L,1)<=REF(L,DT3),DT3+1);\
     FG41:=IF(GT3=0 AND REF(GT3,1)<DT3 AND H<REF(H,REF(GT3,1)+1),1,0);\
-    FD41:=IF(DT3=0 AND REF(DT3,1)<GT3 AND L>REF(L,REF(DT3,1)+1),1,0);\
+    FD41:=IF(DT3=0 AND REF(DT3,1)<GT3 AND L>REF(L,REF(DT3,1)1),1,0);\
     HHH:=GT3=0 AND FG31<>1 AND  FG3<>1;\
     LLL:=DT3=0 AND FD31<>1 AND  FD3<>1;\
     H11:=VALUEWHEN(HHH,H);\
@@ -136,13 +164,17 @@ int main(int argc, const char * argv[]) {
     DRAWTEXT((CROSS(LLL1,C)&&C<WW&&C<II&&C<LDD)||(LLL&&L2>LLL1&&L<WW&&L<II&&L<LDD),L,'支撑');\
     ";
         
-    double b = (double)clock();
+    
+    tx = "P:MA(C,20);\
+    S20:STD(C,20);\
+    S26:STD(C,26);\
+    R1:P+S20;\
+    R2:P+S26*2;\
+    S1:P-S20;\
+    S2:P-S26*2;";
     
     compiler clr = compiler(data);
     result val = clr.compile(tx);
-    
-    double e = (double)clock();
-    std::cout << " ---- " << (e - b)/CLOCKS_PER_SEC << std::endl;
     
     return 0;
 }
