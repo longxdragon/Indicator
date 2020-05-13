@@ -23,7 +23,7 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
             }
         }
     } else if (name.compare("O") == 0 || name.compare("OPEN") == 0) {
-        std::map< std::string, std::vector<double> >::iterator iter = variables.find("C");
+        std::map< std::string, std::vector<double> >::iterator iter = variables.find("O");
         if (iter != variables.end()) {
             rt = iter->second;
         } else {
