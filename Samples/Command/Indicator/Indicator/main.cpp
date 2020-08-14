@@ -178,16 +178,10 @@ int main(int argc, const char * argv[]) {
     DRAWTEXT((CROSS(C,HHH1)&&C>TT&&C>KK&&C>UDD)||(HHH&&H2<HHH1&&H>TT&&H>KK&&H>UDD),H,'压力');\
     DRAWTEXT((CROSS(LLL1,C)&&C<WW&&C<II&&C<LDD)||(LLL&&L2>LLL1&&L<WW&&L<II&&L<LDD),L,'支撑');\
     ";
-        
     
-    tx = "REC:REF(C,1);\
-    REH:REF(H,1);\
-    REL:REF(L,1);\
-    P:IF(REC<O,REH+REL*2+REC,IF(REC>O,REH*2+REL+REC,REH+REL+REC*2));\
-    R1:P/2-REL;\
-    S1:P/2-REH;";
     
     compiler clr = compiler(data);
+    clr.debug = true;
     result val = clr.compile(tx);
     
     return 0;

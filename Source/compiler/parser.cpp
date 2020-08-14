@@ -31,7 +31,7 @@ ast_node::ptr pri_express(token_reader& reader) {
             node = express(reader);
             t = reader.read(); // right_paren
             if (t.empty() || t.st != dfa_state::right_paren) {
-                cout << "An valid expression is required! --- pri_express" << endl;
+                cout << "An valid expression is required! --- pri_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else if (t.st == dfa_state::function_name) {
@@ -51,7 +51,7 @@ ast_node::ptr pri_express(token_reader& reader) {
                             reader.read();  // consum ')'
                             break;
                         } else {
-                            cout << "An valid expression is required! --- pri_express" << endl;
+                            cout << "An valid expression is required! --- pri_express --- " << t.description() << endl;
                             return nullptr;
                         }
                     } else {
@@ -60,11 +60,11 @@ ast_node::ptr pri_express(token_reader& reader) {
                 }
             }
         } else {
-            cout << "An valid expression is required! --- pri_express" << endl;
+            cout << "An valid expression is required! --- pri_express --- " << t.description() << endl;
             return nullptr;
         }
     } else {
-        cout << "An valid expression is required! --- pri_express" << endl;
+        cout << "An valid expression is required! --- pri_express --- " << t.description() << endl;
         return nullptr;
     }
     return node;
@@ -84,7 +84,7 @@ ast_node::ptr mul_express(token_reader& reader) {
                 node->add_child(child_2);
                 child_1 = node;
             } else {
-                cout << "An valid expression is required! --- mul_express" << endl;
+                cout << "An valid expression is required! --- mul_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else {
@@ -108,7 +108,7 @@ ast_node::ptr add_express(token_reader& reader) {
                 node->add_child(child_2);
                 child_1 = node;  // associativity
             } else {
-                cout << "An valid expression is required! --- add_express" << endl;
+                cout << "An valid expression is required! --- add_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else {
@@ -132,7 +132,7 @@ ast_node::ptr rel_express(token_reader& reader) {
                 node->add_child(child_2);
                 child_1 = node;
             } else {
-                cout << "An valid expression is required! --- rel_express" << endl;
+                cout << "An valid expression is required! --- rel_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else {
@@ -156,7 +156,7 @@ ast_node::ptr equal_express(token_reader& reader) {
                 node->add_child(child_2);
                 child_1 = node;
             } else {
-                cout << "An valid expression is required! --- equal_express" << endl;
+                cout << "An valid expression is required! --- equal_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else {
@@ -180,7 +180,7 @@ ast_node::ptr and_express(token_reader& reader) {
                 node->add_child(child_2);
                 child_1 = node;
             } else {
-                cout << "An valid expression is required! --- and_express" << endl;
+                cout << "An valid expression is required! --- and_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else {
@@ -204,7 +204,7 @@ ast_node::ptr or_express(token_reader& reader) {
                 node->add_child(child_2);
                 child_1 = node;
             } else {
-                cout << "An valid expression is required! --- or_express" << endl;
+                cout << "An valid expression is required! --- or_express --- " << t.description() << endl;
                 return nullptr;
             }
         } else {
@@ -232,7 +232,7 @@ ast_node::ptr assignment_express(token_reader& reader) {
                 node->add_child(child_1);
                 node->add_child(child_2);
             } else {
-                cout << "An valid expression is required! --- assignment" << endl;
+                cout << "An valid expression is required! --- assignment --- " << t.description() << endl;
                 return nullptr;
             }
         }
@@ -251,7 +251,7 @@ ast_node::ptr parser::analyze(token_reader& reader) {
             child = pri_express(reader);
         }
         if (child == nullptr) { // error
-            return ast_node::create(ast_node_type::root, "root");
+            return node;
         }
         node->add_child(child);
         reader.read();  // consume ';'

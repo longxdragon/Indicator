@@ -20,9 +20,15 @@ result compiler::compile(std::string s) {
     
     lexer lxr = lexer();
     token_reader reader = lxr.tokenize(s);
+    if (debug) {
+        reader.dump();
+    }
     
     parser pser = parser();
     ast_node::ptr node = pser.analyze(reader);
+    if (debug) {
+        node->dump();
+    }
     
     parse_walker wkr = parse_walker();
     bool is = wkr.walker(node);

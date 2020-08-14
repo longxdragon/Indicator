@@ -25,6 +25,8 @@ class compiler {
 public:
     compiler(vector<map <string, string> > dt);
     result compile(string s);
+    
+    bool debug;
 };
 
 #endif /* compiler_hpp */

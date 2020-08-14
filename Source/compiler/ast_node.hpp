@@ -54,7 +54,7 @@ private:
     ast_node_type m_type;
     std::string m_text;
     std::list<ptr> m_child;
-    void print(int level);
+    void print(int level, int idx);
 };
 
 #endif /* ast_node_hpp */

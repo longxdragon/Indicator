@@ -51,3 +51,7 @@ string token::format_st() {
 bool token::empty() {
     return st == initial;
 }
+
+string token::description() {
+    return txt.append(" : ").append(format_st());
+}

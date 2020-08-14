@@ -65,19 +65,25 @@ std::string format_st(ast_node_type type) {
     }
 }
 
-void ast_node::print(int level) {
+void ast_node::print(int level, int idx) {
     if (!level) {
         std::cout << std::endl;
     }
     for (int i = 0; i < level; i++) {
         std::cout << '\t';
     }
-    std::cout << format_st(m_type) << " : " << m_text << std::endl;
+    if (level == 1) {
+        std::cout << "[" << idx << "] " << format_st(m_type) << " : " << m_text << std::endl;
+    } else {
+        std::cout << format_st(m_type) << " : " << m_text << std::endl;
+    }
+    int i = 0;
     for (auto& item : m_child) {
-        item->print(level + 1);
+        item->print(level + 1, i);
+        i ++;
     }
 }
 
 void ast_node::dump() {
-    print(0);
+    print(0, 0);
 }

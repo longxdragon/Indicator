@@ -63,6 +63,7 @@ public:
     dfa_state st = initial;
     string txt;
     string format_st();
+    string description();
     bool empty();
 };
 

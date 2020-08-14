@@ -259,7 +259,7 @@ vector<double> lib_math::dd_cross(vector<double> v1, vector<double> v2) {
         if (i == 0) {
             rt.push_back(0);
         } else {
-            rt.push_back((pv1 < pv2 && v1[i] > v2[i]) ? 1 : 0);
+            rt.push_back((pv1 <= pv2 && v1[i] > v2[i]) ? 1 : 0);
         }
         pv1 = v1[i];
         pv2 = v2[i];

@@ -50,8 +50,10 @@ void token_reader::set_pos(int p) {
 }
 
 void token_reader::dump() {
+    int i = 0;
     for (vector<token>::iterator iter = token_list.begin(); iter != token_list.end(); iter++) {
-        std::cout << iter->format_st() << " : " << iter->txt << std::endl;
+        std::cout << "[" << i << "] " << iter->format_st() << " : " << iter->txt << std::endl;
+        i ++;
     }
     std::cout << "" << std::endl;
 }

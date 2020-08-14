@@ -172,10 +172,17 @@ token_reader lexer::tokenize(string code) {
             } break;
             case reduce: {
                 token last_token = list.back();
-                if (is_digit(ch) && (last_token.st != identifier && last_token.st != digit)) {
-                    token_text += to_string(ch);
-                    st = digit;
-                    t.st = st;
+                if (is_digit(ch)) { // -2
+                    if (last_token.st == identifier ||
+                        last_token.st == digit ||
+                        last_token.st == right_paren ||
+                        last_token.st == static_key) {
+                        st = init_token(ch);
+                    } else {
+                        token_text += to_string(ch);
+                        st = digit;
+                        t.st = st;
+                    }
                 } else {
                     st = init_token(ch);
                 }
