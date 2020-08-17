@@ -39,6 +39,7 @@ private:
     std::vector<double> _rel_evalute(ast_node::ptr root);
     
     std::vector<std::string> _string_evalute(ast_node::ptr root);
+    std::vector<std::string> _static_evalute(ast_node::ptr root);
     
 public:
     evaluator(std::vector< std::map<std::string, std::string> > dt);

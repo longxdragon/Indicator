@@ -26,6 +26,13 @@ ast_node::ptr pri_express(token_reader& reader) {
         } else if (t.st == dfa_state::static_key) {
             reader.read();
             node = ast_node::create(ast_node_type::static_literal, t.txt);
+        } else if (t.st == dfa_state::color_key) {
+            reader.read();
+            node = ast_node::create(ast_node_type::color_literal, t.txt);
+        } else if (t.st == dfa_state::line_key) {
+            reader.read();
+            node = ast_node::create(ast_node_type::line_literal, t.txt);
+            
         } else if (t.st == dfa_state::left_paren) {
             reader.read();
             node = express(reader);
@@ -241,7 +248,7 @@ ast_node::ptr assignment_express(token_reader& reader) {
 }
 
 ast_node::ptr parser::analyze(token_reader& reader) {
-    ast_node::ptr node = ast_node::create(ast_node_type::root, "root");
+    ast_node::ptr node = ast_node::create(ast_node_type::root, "Root");
     token t = reader.peek();
     while (!t.empty()) {
         ast_node::ptr child = nullptr;
@@ -253,8 +260,27 @@ ast_node::ptr parser::analyze(token_reader& reader) {
         if (child == nullptr) { // error
             return node;
         }
-        node->add_child(child);
-        reader.read();  // consume ';'
+        
+        ast_node::ptr statement = ast_node::create(ast_node_type::statement, "Statement");
+        ast_node::ptr pro = ast_node::create(ast_node_type::property, "Property");
+        statement->add_child(child);
+        statement->add_child(pro);
+    
+        node->add_child(statement);
+        
+        t = reader.peek();
+        while (t.st != dfa_state::semicolon) {
+            if (t.st == dfa_state::comma) {
+                reader.read();
+            } else {
+                ast_node::ptr pp = pri_express(reader);
+                if (pp != nullptr) {
+                    pro->add_child(pp);
+                }
+            }
+            t = reader.peek();
+        }
+        reader.read(); // consume ';'
         t = reader.peek();
     }
     return node;

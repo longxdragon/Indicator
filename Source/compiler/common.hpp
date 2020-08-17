@@ -18,12 +18,20 @@ class defined_table {
 private:
     std::map<std::string, int> function_table;
     std::map<std::string, bool> static_table;
+    std::map<std::string, bool> draw_table;
+    
+    std::map<std::string, bool> color_table;
+    std::map<std::string, bool> line_table;
     
 public:
     defined_table();
     bool is_function(std::string str);
     bool is_static(std::string str);
+    bool is_draw(std::string str);
     int param_cnt_in_function(std::string str);
+    
+    bool is_color(std::string str);
+    bool is_line(std::string str);
 };
 
 #endif /* common_hpp */

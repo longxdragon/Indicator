@@ -48,10 +48,14 @@ ast_node::ptr ast_node::get_child(int idx) {
 std::string format_st(ast_node_type type) {
     switch (type) {
         case ast_node_type::root: return "Root"; break;
+        case ast_node_type::statement: return "Statement"; break;
+        case ast_node_type::property: return "Property"; break;
         case ast_node_type::identifier: return "Identifier"; break;
         case ast_node_type::digit_literal: return "Digit"; break;
         case ast_node_type::string_literal: return "String"; break;
         case ast_node_type::static_literal: return "Static"; break;
+        case ast_node_type::color_literal: return "Color"; break;
+        case ast_node_type::line_literal: return "Line"; break;
         case ast_node_type::assignment: return "Assignment"; break;
         case ast_node_type::return_assignment: return "ReturnAssign"; break;
         case ast_node_type::or_express: return "Or"; break;

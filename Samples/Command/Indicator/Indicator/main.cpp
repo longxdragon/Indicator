@@ -164,7 +164,7 @@ int main(int argc, const char * argv[]) {
     FG4:=BACKSET(REFX(GT3,1)=0 AND GT3<DT3 AND REFX(H,1)>=REF(H,GT3),GT3+1);\
     FD4:=BACKSET(REFX(DT3,1)=0 AND DT3<GT3 AND REFX(L,1)<=REF(L,DT3),DT3+1);\
     FG41:=IF(GT3=0 AND REF(GT3,1)<DT3 AND H<REF(H,REF(GT3,1)+1),1,0);\
-    FD41:=IF(DT3=0 AND REF(DT3,1)<GT3 AND L>REF(L,REF(DT3,1)1),1,0);\
+    FD41:=IF(DT3=0 AND REF(DT3,1)<GT3 AND L>REF(L,REF(DT3,1)+1),1,0);\
     HHH:=GT3=0 AND FG31<>1 AND  FG3<>1;\
     LLL:=DT3=0 AND FD31<>1 AND  FD3<>1;\
     H11:=VALUEWHEN(HHH,H);\
@@ -178,6 +178,9 @@ int main(int argc, const char * argv[]) {
     DRAWTEXT((CROSS(C,HHH1)&&C>TT&&C>KK&&C>UDD)||(HHH&&H2<HHH1&&H>TT&&H>KK&&H>UDD),H,'压力');\
     DRAWTEXT((CROSS(LLL1,C)&&C<WW&&C<II&&C<LDD)||(LLL&&L2>LLL1&&L<WW&&L<II&&L<LDD),L,'支撑');\
     ";
+    
+    tx = "CG线:MA(C,55),COLORCYAN,LINETHICK3;";
+//    tx = "PARTLINE2(MA(C,55),C>MA(C,55),COLORCYAN,C<MA(C,55),COLORCYAN),LINETHICK3;";
     
     
     compiler clr = compiler(data);

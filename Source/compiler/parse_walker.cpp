@@ -13,7 +13,14 @@ bool parse_walker::lookup_function(ast_node::ptr root) {
         ast_node_type ty = child->get_type();
         if (ty == ast_node_type::fun_express) {
             int param_cnt = tb.param_cnt_in_function(child->get_text());
-            if (param_cnt != child->get_child().size()) {
+            if (param_cnt == -1) {
+                // mutable params && > 1 && odd
+                size_t size = child->get_child().size();
+                if (size <= 1 || size % 2 == 0) {
+                    std::cout << "parse_walker function '" << child->get_text() << "' param count error" << std::endl;
+                    return false;
+                }
+            } else if (param_cnt != child->get_child().size()) {
                 std::cout << "parse_walker function '" << child->get_text() << "' param count error" << std::endl;
                 return false;
             }
@@ -41,15 +48,23 @@ bool parse_walker::lookup_variale(ast_node::ptr root) {
 
 bool parse_walker::lookup_statement(ast_node::ptr root) {
     for (ast_node::ptr child : root->get_child()) {
-        ast_node_type ty = child->get_type();
-        if (ty != ast_node_type::assignment && ty != ast_node_type::fun_express && ty != ast_node_type::return_assignment) {
-            return false;
-        } else if (ty == ast_node_type::assignment || ty == ast_node_type::return_assignment) {
-            ast_node::ptr node = child->get_child(0);
-            if (node != nullptr && node->get_type() == ast_node_type::identifier && child->get_child().size() == 2) {
-                var_map.insert({node->get_text(), true});  // store all variable
-                continue;
+        if (child->get_child().size() >= 1) {
+            child = child->get_child(0);
+            ast_node_type ty = child->get_type();
+            if (ty != ast_node_type::assignment && ty != ast_node_type::fun_express && ty != ast_node_type::return_assignment) {
+                std::cout << "parse_walker statement error '" << child->get_text() << "'" << std::endl;
+                return false;
+            } else if (ty == ast_node_type::assignment || ty == ast_node_type::return_assignment) {
+                ast_node::ptr node = child->get_child(0);
+                if (node != nullptr && node->get_type() == ast_node_type::identifier && child->get_child().size() == 2) {
+                    var_map.insert({node->get_text(), true});  // store all variable
+                    continue;
+                }
+                std::cout << "parse_walker statement error '" << child->get_text() << "'" << std::endl;
+                return false;
             }
+        } else {
+            std::cout << "parse_walker statement error '" << child->get_text() << "'" << std::endl;
             return false;
         }
     }

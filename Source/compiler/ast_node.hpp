@@ -17,21 +17,25 @@
 
 enum class ast_node_type {
     root,
+    statement,
+    property,
     
     identifier,
     digit_literal,
     string_literal,
     static_literal,
+    color_literal,
+    line_literal,
     
     assignment,
     return_assignment,
     
-    or_express,
-    and_express,
-    equal_express,
-    rel_express,
-    add_express,
-    mul_express,
+    or_express,          // ||
+    and_express,         // &&
+    equal_express,       // == <>
+    rel_express,         // < <= > >=
+    add_express,         // + -
+    mul_express,         // * /
     fun_express,
 };
 

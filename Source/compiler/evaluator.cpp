@@ -167,6 +167,24 @@ vector< map<string, string> > evaluator::_draw_function(std::string name, ast_no
         std::vector<double> v2 = _evaluate(root->get_child(1));
         std::vector<std::string> v3 = _string_evalute(root->get_child(2));
         rt = lib_draw::draw_text(v1, v2, v3);
+        
+    } else if (name.compare("PARTLINE2") == 0) {
+        vector<double> v1;
+        vector< vector<double> > v2;
+        vector< vector<string> > v3;
+        size_t size = root->get_child().size();
+        for (size_t i = 0; i < size; i++) {
+            if (i == 0) {
+                v1 = _evaluate(root->get_child(0));
+            } else {
+                vector<double> p1 = _evaluate(root->get_child((int)i));
+                vector<string> p2 = _static_evalute(root->get_child((int)i + 1));
+                v2.push_back(p1);
+                v3.push_back(p2);
+                i++;
+            }
+        }
+        rt = lib_draw::part_line2(v1, v2, v3);
     }
     return rt;
 }
@@ -257,6 +275,18 @@ std::vector<std::string> evaluator::_string_evalute(ast_node::ptr root) {
     return rt;
 }
 
+std::vector<std::string> evaluator::_static_evalute(ast_node::ptr root) {
+    std::vector<string> rt;
+    if (root->get_type() == ast_node_type::static_literal ||
+        root->get_type() == ast_node_type::color_literal ||
+        root->get_type() == ast_node_type::line_literal) {
+        for (size_t i = 0; i < data.size(); i++) {
+            rt.push_back(root->get_text());
+        }
+    }
+    return rt;
+}
+
 std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
     std::vector<double> rt;
     ast_node_type ty = root->get_type();
@@ -299,31 +329,42 @@ evaluator::evaluator(std::vector< std::map<std::string, std::string> > dt) {
 result evaluator::evaluate(ast_node::ptr root) {
     std::map< std::string, std::vector<double> > value_1;
     map< string, vector< map<string, string> > > value_2;
+    vector<string> value_3;
     size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
-        if (node->get_type() == ast_node_type::assignment || node->get_type() == ast_node_type::return_assignment) {
-            ast_node::ptr c1 = node->get_child(0);
-            ast_node::ptr c2 = node->get_child(1);
+        ast_node::ptr statement = node->get_child(0);
+        ast_node::ptr property = node->get_child(1);
+        
+        string key;
+        if (statement->get_type() == ast_node_type::assignment || statement->get_type() == ast_node_type::return_assignment) {
+            ast_node::ptr c1 = statement->get_child(0);
+            ast_node::ptr c2 = statement->get_child(1);
             std::vector<double> val = _evaluate(c2);
             if (val.size()) {
                 variables.insert({c1->get_text(), val});
-                if (node->get_type() == ast_node_type::return_assignment) {
-                    value_1.insert({c1->get_text(), val});
+                if (statement->get_type() == ast_node_type::return_assignment) {
+                    key = c1->get_text();
+                    value_1.insert({key, val});
                 }
             }
-        } else if (node->get_type() == ast_node_type::fun_express) {
-            string name = node->get_text();
-            if (name.find("DRAW") != string::npos) {
-                vector< map<string, string> > val = _draw_function(name, node);
-                string k = name + "_" + to_string(idx);
+        } else if (statement->get_type() == ast_node_type::fun_express) {
+            string name = statement->get_text();
+            if (tb.is_draw(name)) {
+                vector< map<string, string> > val = _draw_function(name, statement);
+                key = name + "_" + to_string(idx);
                 if (val.size()) {
-                    value_2[k] = val;
+                    value_2[key] = val;
                 }                
-            } else {
-                
             }
         }
+        
+        if (key.length() && property != nullptr) {
+            for (ast_node::ptr child : property->get_child()) {
+                value_3.push_back(child->get_text());
+            }
+        }
+        
         idx ++;
     }
-    return result(value_1, value_2);
+    return result(value_1, value_2, value_3);
 }

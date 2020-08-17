@@ -50,6 +50,10 @@ dfa_state lexer::init_token(char ch) {
                 t.st = function_name;
             } else if (tb.is_static(token_text)) {
                 t.st = static_key;
+            } else if (tb.is_color(token_text)) {
+                t.st = color_key;
+            } else if (tb.is_line(token_text)) {
+                t.st = line_key;
             }
         }
         if (t.st == string_literal) {
@@ -176,7 +180,9 @@ token_reader lexer::tokenize(string code) {
                     if (last_token.st == identifier ||
                         last_token.st == digit ||
                         last_token.st == right_paren ||
-                        last_token.st == static_key) {
+                        last_token.st == static_key ||
+                        last_token.st == color_key ||
+                        last_token.st == line_key) {
                         st = init_token(ch);
                     } else {
                         token_text += to_string(ch);
