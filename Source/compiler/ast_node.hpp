@@ -24,8 +24,7 @@ enum class ast_node_type {
     digit_literal,
     string_literal,
     static_literal,
-    color_literal,
-    line_literal,
+    property_literal,
     
     assignment,
     return_assignment,

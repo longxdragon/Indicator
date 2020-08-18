@@ -44,8 +44,7 @@ string token::format_st() {
             
         case function_name: return "Function"; break;
         case static_key: return "Static"; break;
-        case color_key: return "Color"; break;
-        case line_key: return "Line"; break;
+        case property_key: return "Property"; break;
         default: return "Disable..."; break;
     };
 }

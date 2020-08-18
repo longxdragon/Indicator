@@ -10,6 +10,8 @@
 #include "lib_math.hpp"
 #include "lib_draw.hpp"
 
+static double draw_null = -1000000000.f;
+
 std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr root) {
     std::vector<double> rt;
     if (name.compare("C") == 0 || name.compare("CLOSE") == 0) {
@@ -178,7 +180,7 @@ vector< map<string, string> > evaluator::_draw_function(std::string name, ast_no
                 v1 = _evaluate(root->get_child(0));
             } else {
                 vector<double> p1 = _evaluate(root->get_child((int)i));
-                vector<string> p2 = _static_evalute(root->get_child((int)i + 1));
+                vector<string> p2 = _property_evalute(root->get_child((int)i + 1));
                 v2.push_back(p1);
                 v3.push_back(p2);
                 i++;
@@ -265,6 +267,7 @@ std::vector<double> evaluator::_rel_evalute(ast_node::ptr root) {
     return rt;
 }
 
+// string
 std::vector<std::string> evaluator::_string_evalute(ast_node::ptr root) {
     std::vector<string> rt;
     if (root->get_type() == ast_node_type::string_literal) {
@@ -275,11 +278,24 @@ std::vector<std::string> evaluator::_string_evalute(ast_node::ptr root) {
     return rt;
 }
 
-std::vector<std::string> evaluator::_static_evalute(ast_node::ptr root) {
+// static value replace
+std::vector<double> evaluator::_static_evalute(ast_node::ptr root) {
+    std::vector<double> rt;
+    if (root->get_type() == ast_node_type::static_literal) {
+        string name = root->get_text();
+        if (name.compare("DRAWNULL") || name.compare("NULL")) {
+            for (size_t i = 0; i < data.size(); i++) {
+                rt.push_back(draw_null);
+            }
+        }
+    }
+    return rt;
+}
+
+// propert string format
+std::vector<std::string> evaluator::_property_evalute(ast_node::ptr root) {
     std::vector<string> rt;
-    if (root->get_type() == ast_node_type::static_literal ||
-        root->get_type() == ast_node_type::color_literal ||
-        root->get_type() == ast_node_type::line_literal) {
+    if (root->get_type() == ast_node_type::property_literal) {
         for (size_t i = 0; i < data.size(); i++) {
             rt.push_back(root->get_text());
         }
@@ -295,6 +311,8 @@ std::vector<double> evaluator::_evaluate(ast_node::ptr root) {
         for (size_t i = 0; i < data.size(); i++) {
             rt.push_back(lib_math::string_2_double(root->get_text()));
         }
+    } else if (ty == ast_node_type::static_literal) {
+        rt = _static_evalute(root);
     } else if (ty == ast_node_type::fun_express) {
         rt = _call_function(root->get_text(), root);
     } else if (ty == ast_node_type::add_express) {
@@ -329,7 +347,7 @@ evaluator::evaluator(std::vector< std::map<std::string, std::string> > dt) {
 result evaluator::evaluate(ast_node::ptr root) {
     std::map< std::string, std::vector<double> > value_1;
     map< string, vector< map<string, string> > > value_2;
-    vector<string> value_3;
+    map< string, vector<string> > value_3;
     size_t idx = 0;
     for (ast_node::ptr node : root->get_child()) {
         ast_node::ptr statement = node->get_child(0);
@@ -344,7 +362,7 @@ result evaluator::evaluate(ast_node::ptr root) {
                 variables.insert({c1->get_text(), val});
                 if (statement->get_type() == ast_node_type::return_assignment) {
                     key = c1->get_text();
-                    value_1.insert({key, val});
+                    value_1[key] = val;
                 }
             }
         } else if (statement->get_type() == ast_node_type::fun_express) {
@@ -355,13 +373,21 @@ result evaluator::evaluate(ast_node::ptr root) {
                 if (val.size()) {
                     value_2[key] = val;
                 }                
+            } else {
+                vector<double> val = _call_function(name, statement);
+                key = name + "_" + to_string(idx);
+                if (val.size()) {
+                    value_1[key] = val;
+                }
             }
         }
         
         if (key.length() && property != nullptr) {
+            vector<string> pps;
             for (ast_node::ptr child : property->get_child()) {
-                value_3.push_back(child->get_text());
+                pps.push_back(child->get_text());
             }
+            value_3[key] = pps;
         }
         
         idx ++;

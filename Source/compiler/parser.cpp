@@ -26,12 +26,9 @@ ast_node::ptr pri_express(token_reader& reader) {
         } else if (t.st == dfa_state::static_key) {
             reader.read();
             node = ast_node::create(ast_node_type::static_literal, t.txt);
-        } else if (t.st == dfa_state::color_key) {
+        } else if (t.st == dfa_state::property_key) {
             reader.read();
-            node = ast_node::create(ast_node_type::color_literal, t.txt);
-        } else if (t.st == dfa_state::line_key) {
-            reader.read();
-            node = ast_node::create(ast_node_type::line_literal, t.txt);
+            node = ast_node::create(ast_node_type::property_literal, t.txt);
             
         } else if (t.st == dfa_state::left_paren) {
             reader.read();

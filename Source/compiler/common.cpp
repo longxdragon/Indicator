@@ -36,24 +36,19 @@ defined_table::defined_table() {
     }
     
     std::string st[] = {
-        "NULL", "NODRAW",
+        "NULL", "DRAWNULL"
     };
     for (int i = 0; i < length(st); i++) {
         static_table.insert({st[i], true});
     }
     
-    std::string colors[] = {
-        "COLORCYAN", "COLORRED", "COLORGREEN", "COLORBLACK"
+    std::string propertys[] = {
+        "COLORCYAN", "COLORRED", "COLORGREEN", "COLORBLACK",
+        "LINETHICK3",
+        "NODRAW"
     };
-    for (int i = 0; i < length(colors); i++) {
-        color_table.insert({colors[i], true});
-    }
-    
-    std::string lines[] = {
-        "LINETHICK3"
-    };
-    for (int i = 0; i < length(lines); i++) {
-        line_table.insert({lines[i], true});
+    for (int i = 0; i < length(propertys); i++) {
+        property_table.insert({propertys[i], true});
     }
     
     std::string dr[] = {
@@ -94,15 +89,8 @@ int defined_table::param_cnt_in_function(std::string str) {
     return iter->second;
 }
 
-bool defined_table::is_color(std::string str) {
-    if (color_table.find(str) == color_table.end()) {
-        return false;
-    }
-    return true;
-}
-
-bool defined_table::is_line(std::string str) {
-    if (line_table.find(str) == line_table.end()) {
+bool defined_table::is_property(std::string str) {
+    if (property_table.find(str) == property_table.end()) {
         return false;
     }
     return true;

@@ -19,9 +19,7 @@ private:
     std::map<std::string, int> function_table;
     std::map<std::string, bool> static_table;
     std::map<std::string, bool> draw_table;
-    
-    std::map<std::string, bool> color_table;
-    std::map<std::string, bool> line_table;
+    std::map<std::string, bool> property_table;
     
 public:
     defined_table();
@@ -30,8 +28,7 @@ public:
     bool is_draw(std::string str);
     int param_cnt_in_function(std::string str);
     
-    bool is_color(std::string str);
-    bool is_line(std::string str);
+    bool is_property(std::string str);
 };
 
 #endif /* common_hpp */

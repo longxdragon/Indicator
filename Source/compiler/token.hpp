@@ -55,8 +55,7 @@ enum dfa_state {
     
     function_name,
     static_key,
-    color_key,
-    line_key,
+    property_key
 };
 
 struct token {
