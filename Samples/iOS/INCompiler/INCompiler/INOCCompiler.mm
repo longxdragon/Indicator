@@ -75,7 +75,26 @@
         iter++;
     }
     
-    return @{ @"assign" : res1, @"draw_text" : res2 };
+    NSMutableDictionary *res3 = [NSMutableDictionary new];
+    map< string, vector<string> > pps = val.get_property_values();
+    map< string, vector<string> >::iterator iter3 = pps.begin();
+    while (iter3 != pps.end()) {
+        string key = iter3->first;
+        vector<string> val = iter3->second;
+        NSString *k = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
+        NSMutableArray *v = [NSMutableArray new];
+        for (int i = 0; i < val.size(); i++) {
+            string xx = val[i];
+            NSString *xxx = [NSString stringWithCString:xx.c_str() encoding:NSUTF8StringEncoding];
+            if (xxx) {
+                [v addObject:xxx];
+            }
+        }
+        res3[k] = v;
+        iter3++;
+    }
+    
+    return @{ @"assign" : res1, @"draw_text" : res2, @"property" : res3 };
 }
 
 @end

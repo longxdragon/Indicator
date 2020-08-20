@@ -385,7 +385,19 @@ result evaluator::evaluate(ast_node::ptr root) {
         if (key.length() && property != nullptr) {
             vector<string> pps;
             for (ast_node::ptr child : property->get_child()) {
-                pps.push_back(child->get_text());
+                string name = child->get_text();
+                if (tb.is_function(name)) {
+                    name += "(";
+                    for (ast_node::ptr cc : child->get_child()) {
+                        name += cc->get_text();
+                        name += ",";
+                    }
+                    name.erase(name.length() - 1, 1);
+                    name += ")";
+                    pps.push_back(name);
+                } else {
+                    pps.push_back(child->get_text());
+                }
             }
             value_3[key] = pps;
         }

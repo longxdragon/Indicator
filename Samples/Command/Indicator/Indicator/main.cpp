@@ -179,12 +179,7 @@ int main(int argc, const char * argv[]) {
     DRAWTEXT((CROSS(LLL1,C)&&C<WW&&C<II&&C<LDD)||(LLL&&L2>LLL1&&L<WW&&L<II&&L<LDD),L,'支撑');\
     ";
     
-    tx = "CG线:MA(C,55),COLORCYAN,LINETHICK3;";
-    tx = "\
-    趋势线:EMA(EMA(C,10),10),COLORRED,LINETHICK3;\
-    B:=趋势线>REF(趋势线,1);\
-    IF(B-1,趋势线,DRAWNULL),COLORGREEN,LINETHICK3;\
-    ";
+    tx = "CG线:MA(C,55),COLORRGB(10,10,10),LINETHICK3;";
     
     compiler clr = compiler(data);
     clr.debug = true;

@@ -16,20 +16,22 @@ int length(T& arr) {
 
 defined_table::defined_table() {
     std::string ft[] = {
-        "PARTLINE2",
         "C", "L", "H", "O", "CLOSE", "LOW", "HIGH", "OPEN", "ISLASTBAR",
         "BARSLAST", "ABS",
         "MA", "EMA", "SMA", "REF", "REFX", "HHV", "LLV", "AVEDEV", "MAX", "MIN", "STD",
         "CROSS", "IF", "BACKSET", "VALUEWHEN",
-        "DRAWTEXT", "DRAWCOLORLINE"
+        "DRAWTEXT", "DRAWCOLORLINE",
+        "PARTLINE2",
+        "COLORRGB",
     };
     int pr[] = {
-        -1,
         0, 0, 0, 0, 0, 0, 0, 0, 0,
         1, 1,
         2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2,
         2, 3, 2, 2,
-        3, 4
+        3, 4,
+        -1,
+        3,
     };
     for (int i = 0; i < length(ft) && i < length(pr); i++) {
         function_table.insert({ft[i], pr[i]});
