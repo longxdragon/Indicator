@@ -348,7 +348,9 @@ result evaluator::evaluate(ast_node::ptr root) {
     std::map< std::string, std::vector<double> > value_1;
     map< string, vector< map<string, string> > > value_2;
     map< string, vector<string> > value_3;
+    vector<var_model> value_4;
     size_t idx = 0;
+    
     for (ast_node::ptr node : root->get_child()) {
         ast_node::ptr statement = node->get_child(0);
         ast_node::ptr property = node->get_child(1);
@@ -363,6 +365,11 @@ result evaluator::evaluate(ast_node::ptr root) {
                 if (statement->get_type() == ast_node_type::return_assignment) {
                     key = c1->get_text();
                     value_1[key] = val;
+                    
+                    var_model model = var_model();
+                    model.name = key;
+                    model.datas = val;
+                    value_4.push_back(model);
                 }
             }
         } else if (statement->get_type() == ast_node_type::fun_express) {
@@ -378,6 +385,11 @@ result evaluator::evaluate(ast_node::ptr root) {
                 key = name + "_" + to_string(idx);
                 if (val.size()) {
                     value_1[key] = val;
+                    
+                    var_model model = var_model();
+                    model.name = key;
+                    model.datas = val;
+                    value_4.push_back(model);
                 }
             }
         }
@@ -404,5 +416,5 @@ result evaluator::evaluate(ast_node::ptr root) {
         
         idx ++;
     }
-    return result(value_1, value_2, value_3);
+    return result(value_1, value_2, value_3, value_4);
 }

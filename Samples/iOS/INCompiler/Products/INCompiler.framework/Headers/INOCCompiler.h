@@ -10,6 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface INOCVarModel : NSObject
+
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSArray<NSString *> *datas;
+
+@end
+
 @interface INOCCompiler : NSObject
 
 - (NSDictionary *)compileKlineDataSource:(NSArray<NSDictionary *> *)datas formula:(NSString *)formula;

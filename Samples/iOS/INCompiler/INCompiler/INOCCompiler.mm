@@ -11,6 +11,10 @@
 #import "compiler.hpp"
 #import "result.hpp"
 
+@implementation INOCVarModel
+
+@end
+
 @interface INOCCompiler ()
 
 @end
@@ -94,7 +98,23 @@
         iter3++;
     }
     
-    return @{ @"assign" : res1, @"draw_text" : res2, @"property" : res3 };
+    NSMutableArray *res4 = [NSMutableArray new];
+    vector<var_model> vars = val.get_var_values();
+    for (size_t i = 0; i < vars.size(); i++) {
+        var_model var = vars[i];
+        NSMutableArray *datas = [NSMutableArray new];
+        for (size_t j = 0; j < var.datas.size(); j++) {
+            [datas addObject:[NSString stringWithFormat:@"%.f", var.datas[j]]];
+        }
+        INOCVarModel *m = [[INOCVarModel alloc] init];
+        m.name = [NSString stringWithCString:var.name.c_str() encoding:NSUTF8StringEncoding];
+        m.datas = [datas copy];
+        if (m) {
+            [res4 addObject:m];
+        }
+    }
+    
+    return @{ @"assign" : res1, @"draw_text" : res2, @"property" : res3, @"vars" : res4 };
 }
 
 @end
