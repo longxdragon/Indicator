@@ -20,12 +20,14 @@ defined_table::defined_table() {
         "BARSLAST", "ABS",
         "MA", "EMA", "SMA", "REF", "REFX", "HHV", "LLV", "AVEDEV", "MAX", "MIN", "STD",
         "CROSS", "IF", "BACKSET", "VALUEWHEN",
+        "COUNT",
         "DRAWTEXT", "DRAWCOLORLINE"
     };
     int pr[] = {
         0, 0, 0, 0, 0, 0, 0, 0, 0,
         1, 1,
         2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2,
+        2,
         2, 3, 2, 2,
         3, 4
     };

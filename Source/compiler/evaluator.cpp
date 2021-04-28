@@ -154,6 +154,12 @@ std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr ro
         std::vector<double> v1 = _evaluate(root->get_child(0));
         rt = lib_math::dd_abs(v1);
         
+    } else if (name.compare("COUNT") == 0) {
+        std::vector<double> v1 = _evaluate(root->get_child(0));
+        std::vector<double> v2 = _evaluate(root->get_child(1));
+        if (v2.size() > 0) {
+            rt = lib_math::dd_count(v1, (size_t)v2[0]);
+        }
     } else {
         std::cout << "Not implement func name : " << name << std::endl;
     }

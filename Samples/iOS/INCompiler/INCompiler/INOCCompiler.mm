@@ -35,6 +35,7 @@
     
     string txt = string([formula UTF8String]);
     compiler clr = compiler(list);
+    clr.debug = false;
     result val = clr.compile(txt);
     
     map< string, vector<double> > digit = val.get_digit_values();

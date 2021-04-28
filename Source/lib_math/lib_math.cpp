@@ -315,3 +315,27 @@ vector<double> lib_math::dd_value_when(vector<double> data, vector<double> val) 
     }
     return rt;
 }
+
+vector<double> lib_math::dd_count(vector<double> data, size_t n) {
+    std::vector<double> rt;
+    std::deque<size_t> deq;
+    size_t count = 0;
+    for (size_t i = 0; i < data.size(); i++) {
+        if (n == 0) {
+            if (data[i] != 0) {
+                ++count;
+            }
+            rt.push_back(count);
+        } else {
+            size_t offset = i >= n ? i - n : 0;
+            while (i >= n && !deq.empty() && deq.front() <= offset) {
+                deq.pop_front();
+            }
+            if (data[i] != 0) {
+                deq.push_back(i);
+            }
+            rt.push_back(deq.size());
+        }
+    }
+    return rt;
+}

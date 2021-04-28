@@ -54,6 +54,7 @@ public:
     static vector<double> dd_barslast(vector<double> data);
     static vector<double> dd_backset(vector<double> data, vector<double> n);
     static vector<double> dd_value_when(vector<double> data, vector<double> val);
+    static vector<double> dd_count(vector<double> data, size_t n);
 };
 
 #endif /* lib_math_hpp */
