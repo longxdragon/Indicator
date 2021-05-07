@@ -161,7 +161,7 @@ vector<double> lib_math::dd_ref(vector<double> data, vector<double> n) {
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
         size_t nt = n[i] > 0 ? n[i] : 0;
         if (i >= nt) rt.push_back(data[i - nt]);
-        else rt.push_back(0);
+        else rt.push_back(data[0]);
     }
     return rt;
 }
@@ -171,7 +171,7 @@ vector<double> lib_math::dd_refx(vector<double> data, vector<double> n) {
     for (size_t i = 0; i < data.size() && i < n.size(); i++) {
         size_t nt = n[i] > 0 ? n[i] : 0;
         if (i + nt < data.size()) rt.push_back(data[i + nt]);
-        else rt.push_back(0);
+        else rt.push_back(data[data.size() - 1]);
     }
     return rt;
 }

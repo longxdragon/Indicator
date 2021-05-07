@@ -7,8 +7,8 @@
 //
 
 #include "evaluator.hpp"
-#include "lib_math.hpp"
-#include "lib_draw.hpp"
+#include "../lib_math/lib_math.hpp"
+#include "../lib_math/lib_draw.hpp"
 
 std::vector<double> evaluator::_call_function(std::string name, ast_node::ptr root) {
     std::vector<double> rt;

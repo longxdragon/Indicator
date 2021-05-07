@@ -71,7 +71,7 @@ int main(int argc, const char * argv[]) {
         data.push_back(item);
     }
     
-    string tx = "N:=12; M:=6; PSY:=COUNT(CLOSE>REF(CLOSE,1), N)/N*100; PSYMA:MA(PSY,M);";
+    string tx = "N:=12;M:=20;TR:=EMA(EMA(EMA(CLOSE,N),N),N);REFTR:=REF(TR,1);TRIX:(TR-REFTR)/REFTR*100;TRMA:MA(TRIX,M);";
     
     
     compiler clr = compiler(data);
